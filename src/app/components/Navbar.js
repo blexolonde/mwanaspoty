@@ -21,7 +21,7 @@ export default function Navbar() {
         {user ? (
           <>
             {" "}
-            <span>Hi, {user.name}</span>{" "}
+            <Link href="/account">Hi, {user.name}</Link>{" "}
             <button onClick={logout} className="underline">
               {" "}
               Logout{" "}
