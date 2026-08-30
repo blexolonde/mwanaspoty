@@ -1,12 +1,16 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { jerseys } from "../data/jerseys";
 export default function Search() {
   const [query, setQuery] = useState("");
-  const results = jerseys.filter((j) =>
-    j.team.toLowerCase().includes(query.toLowerCase()),
-  );
+  const [results, setResults] = useState([]);
+  useEffect(() => {
+    fetch(
+      `http://localhost:5000/api/jerseys?search=${encodeURIComponent(query)}`,
+    )
+      .then((res) => res.json())
+      .then((data) => setResults(data));
+  }, [query]);
   return (
     <main className="px-6 py-12">
       {" "}
