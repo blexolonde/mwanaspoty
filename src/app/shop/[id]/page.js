@@ -2,12 +2,8 @@
 import { useParams } from "next/navigation";
 import { useCart } from "../../components/CartContext";
 import { useWishlist } from "../../components/WishlistContext";
-const jerseys = [
-  { id: 1, team: "Barcelona", price: 6500 },
-  { id: 2, team: "Real Madrid", price: 6500 },
-  { id: 3, team: "Manchester United", price: 6000 },
-  { id: 4, team: "AC Milan", price: 5800 },
-];
+import { jerseys } from "../../data/jerseys";
+
 export default function ProductDetails() {
   const { id } = useParams();
   const { addToCart } = useCart();

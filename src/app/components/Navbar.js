@@ -12,6 +12,8 @@ export default function Navbar() {
       <div className="flex gap-6">
         {" "}
         <Link href="/">Home</Link> <Link href="/shop">Shop</Link>{" "}
+        <Link href="/categories">Categories</Link>{" "}
+        <Link href="/search">Search</Link>{" "}
         <Link href="/wishlist">Wishlist ({wishlist.length})</Link>{" "}
         <Link href="/cart">Cart ({cart.length})</Link>{" "}
       </div>{" "}
