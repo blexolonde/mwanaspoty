@@ -1,5 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import { AuthProvider } from "./components/AuthContext";
 import { CartProvider } from "./components/CartContext";
 import { WishlistProvider } from "./components/WishlistContext";
@@ -31,7 +32,8 @@ export default function RootLayout({ children }) {
           <WishlistProvider>
             <CartProvider>
               <Navbar />
-              {children}
+              <div className="flex-1">{children}</div>
+              <Footer />
             </CartProvider>
           </WishlistProvider>
         </AuthProvider>
