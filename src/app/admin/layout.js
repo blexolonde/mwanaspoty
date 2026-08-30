@@ -21,6 +21,7 @@ export default function AdminLayout({ children }) {
           <Link href="/admin/products">Products</Link>{" "}
           <Link href="/admin/orders">Orders</Link>{" "}
           <Link href="/admin/customers">Customers</Link>{" "}
+          <Link href="/admin/analytics">Analytics</Link>{" "}
         </nav>{" "}
       </aside>{" "}
       <div className="flex-1">{children}</div>{" "}
