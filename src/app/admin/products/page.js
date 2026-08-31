@@ -9,6 +9,8 @@ export default function AdminProducts() {
   const [price, setPrice] = useState("");
   const [league, setLeague] = useState("");
   const [isClassic, setIsClassic] = useState(false);
+  const [imageFile, setImageFile] = useState(null);
+  const [uploading, setUploading] = useState(false);
 
   function loadJerseys() {
     fetch("http://localhost:5000/api/jerseys")
@@ -22,18 +24,39 @@ export default function AdminProducts() {
 
   async function handleAdd(e) {
     e.preventDefault();
+    setUploading(true);
+    let imageUrl = null;
+    if (imageFile) {
+      const formData = new FormData();
+      formData.append("image", imageFile);
+      const uploadRes = await fetch("http://localhost:5000/api/upload", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+        body: formData,
+      });
+      const uploadData = await uploadRes.json();
+      imageUrl = uploadData.url;
+    }
     await fetch("http://localhost:5000/api/jerseys", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ team, price: Number(price), league, isClassic }),
+      body: JSON.stringify({
+        team,
+        price: Number(price),
+        league,
+        isClassic,
+        image: imageUrl,
+      }),
     });
     setTeam("");
     setPrice("");
     setLeague("");
     setIsClassic(false);
+    setImageFile(null);
+    setUploading(false);
     loadJerseys();
   }
 
@@ -71,6 +94,12 @@ export default function AdminProducts() {
           className="border rounded px-3 py-2"
           required
         />
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) => setImageFile(e.target.files[0])}
+          className="text-sm"
+        />
         <label className="flex items-center gap-2 text-sm">
           <input
             type="checkbox"
@@ -79,8 +108,12 @@ export default function AdminProducts() {
           />
           Classic/Vintage Kit
         </label>
-        <button type="submit" className="bg-black text-white px-4 py-2 rounded">
-          Add Jersey
+        <button
+          type="submit"
+          disabled={uploading}
+          className="bg-black text-white px-4 py-2 rounded disabled:opacity-50"
+        >
+          {uploading ? "Uploading..." : "Add Jersey"}
         </button>
       </form>
       <table className="w-full border-collapse">

@@ -1,33 +1,23 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-export default function Search() {
-  const searchParams = useSearchParams();
-  const initialQuery = searchParams.get("q") || "";
-  const [query, setQuery] = useState(initialQuery);
-  const [results, setResults] = useState([]);
+export default function BestSellers() {
+  const [jerseys, setJerseys] = useState([]);
   useEffect(() => {
-    fetch(
-      `http://localhost:5000/api/jerseys?search=${encodeURIComponent(query)}`,
-    )
+    fetch("http://localhost:5000/api/best-sellers")
       .then((res) => res.json())
-      .then((data) => setResults(data));
-  }, [query]);
+      .then((data) => setJerseys(data));
+  }, []);
   return (
     <main className="px-6 py-12">
       {" "}
-      <h1 className="text-3xl font-bold mb-6">Search Jerseys</h1>{" "}
-      <input
-        type="text"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        placeholder="Search by team name..."
-        className="border rounded-lg px-4 py-2 w-full max-w-md mb-8"
-      />{" "}
+      <h1 className="text-3xl font-bold mb-8">Best Sellers</h1>{" "}
+      {jerseys.length === 0 && (
+        <p className="text-gray-500">No sales data yet — check back soon!</p>
+      )}{" "}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
         {" "}
-        {results.map((jersey) => (
+        {jerseys.map((jersey) => (
           <Link
             key={jersey.id}
             href={`/shop/${jersey.id}`}
@@ -48,9 +38,6 @@ export default function Search() {
           </Link>
         ))}{" "}
       </div>{" "}
-      {query && results.length === 0 && (
-        <p className="text-gray-500 mt-6">No jerseys found for "{query}".</p>
-      )}{" "}
     </main>
   );
 }

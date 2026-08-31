@@ -23,7 +23,15 @@ export default function Shop() {
             href={`/shop/${jersey.id}`}
             className="border rounded-lg p-4 text-center block hover:shadow-md"
           >
-            <div className="bg-gray-100 h-40 mb-4 rounded"></div>
+            {jersey.image ? (
+              <img
+                src={jersey.image}
+                alt={jersey.team}
+                className="h-40 w-full object-cover mb-4 rounded"
+              />
+            ) : (
+              <div className="bg-gray-100 h-40 mb-4 rounded"></div>
+            )}
             <h2 className="font-semibold">{jersey.team}</h2>
             <p className="text-gray-600">KSh {jersey.price}</p>
           </Link>

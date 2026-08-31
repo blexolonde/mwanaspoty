@@ -16,6 +16,7 @@ export default function Cart() {
       return;
     }
     const items = cart.map((item) => ({
+      id: item.id,
       team: item.team,
       price: item.price,
       quantity: 1,

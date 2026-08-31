@@ -40,7 +40,15 @@ function JerseySection({ title, jerseys, shopAllHref, shopAllLabel }) {
               key={jersey.id}
               className="border rounded-lg p-4 flex flex-col min-w-[260px]"
             >
-              <div className="bg-gray-100 h-64 w-full mb-4 rounded"></div>
+              {jersey.image ? (
+                <img
+                  src={jersey.image}
+                  alt={jersey.team}
+                  className="h-64 w-full object-cover mb-4 rounded"
+                />
+              ) : (
+                <div className="bg-gray-100 h-64 w-full mb-4 rounded"></div>
+              )}
               <p className="font-bold text-lg mb-1">KSh {jersey.price}</p>
               <p className="text-sm text-gray-700 mb-3">{jersey.team}</p>
               <Link

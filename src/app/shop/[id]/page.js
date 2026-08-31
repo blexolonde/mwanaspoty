@@ -21,7 +21,15 @@ export default function ProductDetails() {
 
   return (
     <main className="px-6 py-12 max-w-2xl mx-auto">
-      <div className="bg-gray-100 h-72 rounded mb-6"></div>
+      {jersey.image ? (
+        <img
+          src={jersey.image}
+          alt={jersey.team}
+          className="h-72 w-full object-cover rounded mb-6"
+        />
+      ) : (
+        <div className="bg-gray-100 h-72 rounded mb-6"></div>
+      )}
       <h1 className="text-3xl font-bold mb-2">{jersey.team}</h1>
       <p className="text-xl text-gray-600 mb-6">KSh {jersey.price}</p>
 
