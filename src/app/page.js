@@ -5,10 +5,16 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 function JerseySection({ title, jerseys, shopAllHref, shopAllLabel }) {
   const scrollRef = useRef(null);
+  const [page, setPage] = useState(0);
+  const itemsPerPage = 4;
+  const totalPages = Math.max(1, Math.ceil(jerseys.length / itemsPerPage));
 
-  function scroll(direction) {
+  function goToPage(newPage) {
+    const clamped = Math.max(0, Math.min(newPage, totalPages - 1));
+    setPage(clamped);
     if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: direction * 300, behavior: "smooth" });
+      const width = scrollRef.current.clientWidth;
+      scrollRef.current.scrollTo({ left: clamped * width, behavior: "smooth" });
     }
   }
 
@@ -20,7 +26,7 @@ function JerseySection({ title, jerseys, shopAllHref, shopAllLabel }) {
       )}
       <div className="relative max-w-6xl mx-auto">
         <button
-          onClick={() => scroll(-1)}
+          onClick={() => goToPage(page - 1)}
           className="absolute -left-4 top-1/2 -translate-y-1/2 bg-white border rounded-full p-2 shadow z-10 hidden md:block"
         >
           <ChevronLeft size={20} />
@@ -32,23 +38,33 @@ function JerseySection({ title, jerseys, shopAllHref, shopAllLabel }) {
           {jerseys.map((jersey) => (
             <div
               key={jersey.id}
-              className="border rounded-lg p-4 text-center flex flex-col items-center min-w-[220px]"
+              className="border rounded-lg p-4 flex flex-col min-w-[260px]"
             >
-              <div className="bg-gray-100 h-40 w-full mb-4 rounded"></div>
-              <p className="font-bold mb-1">KSh {jersey.price}</p>
-              <p className="text-sm text-gray-700 mb-1">{jersey.team}</p>
-              <p className="text-xs text-gray-400 mb-3">{jersey.league}</p>
+              <div className="bg-gray-100 h-64 w-full mb-4 rounded"></div>
+              <p className="font-bold text-lg mb-1">KSh {jersey.price}</p>
+              <p className="text-sm text-gray-700 mb-3">{jersey.team}</p>
               <Link
                 href={`/shop/${jersey.id}`}
-                className="border border-green-600 text-green-700 rounded-full px-5 py-1 text-sm font-semibold hover:bg-green-600 hover:text-white"
+                className="border border-green-600 text-green-700 rounded-full px-5 py-1 text-sm font-semibold text-center hover:bg-green-600 hover:text-white"
               >
                 Buy now
               </Link>
             </div>
           ))}
         </div>
+        <div className="flex justify-center gap-2 mt-4">
+          {Array.from({ length: totalPages }).map((_, i) => (
+            <button
+              key={i}
+              onClick={() => goToPage(i)}
+              className={`h-2 rounded-full transition-all ${
+                i === page ? "w-6 bg-black" : "w-2 bg-gray-300"
+              }`}
+            />
+          ))}
+        </div>
         <button
-          onClick={() => scroll(1)}
+          onClick={() => goToPage(page + 1)}
           className="absolute -right-4 top-1/2 -translate-y-1/2 bg-white border rounded-full p-2 shadow z-10 hidden md:block"
         >
           <ChevronRight size={20} />
@@ -72,7 +88,7 @@ export default function Home() {
   const [classicKits, setClassicKits] = useState([]);
   const [topSelling, setTopSelling] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:5000/api/jerseys")
+    fetch("http://localhost:5000/api/jerseys?classic=true")
       .then((res) => res.json())
       .then((data) => setClassicKits(data.slice(0, 4)));
     fetch("http://localhost:5000/api/best-sellers")

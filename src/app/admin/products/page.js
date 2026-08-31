@@ -8,6 +8,7 @@ export default function AdminProducts() {
   const [team, setTeam] = useState("");
   const [price, setPrice] = useState("");
   const [league, setLeague] = useState("");
+  const [isClassic, setIsClassic] = useState(false);
 
   function loadJerseys() {
     fetch("http://localhost:5000/api/jerseys")
@@ -27,11 +28,12 @@ export default function AdminProducts() {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ team, price: Number(price), league }),
+      body: JSON.stringify({ team, price: Number(price), league, isClassic }),
     });
     setTeam("");
     setPrice("");
     setLeague("");
+    setIsClassic(false);
     loadJerseys();
   }
 
@@ -69,6 +71,14 @@ export default function AdminProducts() {
           className="border rounded px-3 py-2"
           required
         />
+        <label className="flex items-center gap-2 text-sm">
+          <input
+            type="checkbox"
+            checked={isClassic}
+            onChange={(e) => setIsClassic(e.target.checked)}
+          />
+          Classic/Vintage Kit
+        </label>
         <button type="submit" className="bg-black text-white px-4 py-2 rounded">
           Add Jersey
         </button>

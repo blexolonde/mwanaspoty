@@ -102,9 +102,9 @@ export default function Navbar() {
           "La Liga",
           "Bundesliga",
           "Ligue 1",
-          "Kenyan Premier League",
-          "Tanzania Premier League",
-          "Ugandan Premier League",
+          "KPL",
+          "Tanzania League",
+          "Uganda League",
         ].map((league) => (
           <div
             key={league}
@@ -116,13 +116,7 @@ export default function Navbar() {
               href={`/categories/${encodeURIComponent(league)}`}
               className="hover:text-orange-400"
             >
-              {league === "Kenyan Premier League"
-                ? "KPL"
-                : league === "Tanzania Premier League"
-                  ? "Tanzania League"
-                  : league === "Ugandan Premier League"
-                    ? "Uganda League"
-                    : league}
+              {league}
             </Link>
             {hoveredLeague === league && (
               <div className="absolute top-full left-0 bg-white text-black shadow-lg rounded-b-lg py-2 w-48 z-50">
