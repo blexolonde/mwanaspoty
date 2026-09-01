@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Search, Heart, ShoppingCart, User, Home } from "lucide-react";
+import { Search, Heart, ShoppingCart, User, Home, Menu, X } from "lucide-react";
 import { useCart } from "./CartContext";
 import { useWishlist } from "./WishlistContext";
 import { useAuth } from "./AuthContext";
@@ -14,6 +14,7 @@ export default function Navbar() {
   const [query, setQuery] = useState("");
   const [allJerseys, setAllJerseys] = useState([]);
   const [hoveredLeague, setHoveredLeague] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -30,73 +31,76 @@ export default function Navbar() {
   return (
     <nav className="bg-slate-900 text-white">
       {" "}
-      <div className="flex items-center justify-between px-6 py-3 gap-6">
-        {" "}
-        <Link href="/" className="text-xl font-bold whitespace-nowrap">
+      <div className="flex items-center justify-between px-4 md:px-6 py-3 gap-3 md:gap-6">
+        <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden">
+          {menuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+        <Link
+          href="/"
+          className="text-lg md:text-xl font-bold whitespace-nowrap"
+        >
           MwanaSpoty
-        </Link>{" "}
-        <form onSubmit={handleSearch} className="flex flex-1 max-w-2xl">
-          {" "}
+        </Link>
+        <form
+          onSubmit={handleSearch}
+          className="hidden sm:flex flex-1 max-w-2xl"
+        >
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search products, brands and categories"
-            className="flex-1 rounded-l-full px-4 py-2 text-black bg-white outline-none"
-          />{" "}
+            className="flex-1 rounded-l-full px-4 py-2 text-black bg-white outline-none min-w-0"
+          />
           <button
             type="submit"
             className="bg-orange-500 hover:bg-orange-600 rounded-r-full px-4"
           >
-            {" "}
-            <Search size={20} />{" "}
-          </button>{" "}
-        </form>{" "}
-        <Link href="/" className="hover:text-orange-400">
+            <Search size={20} />
+          </button>
+        </form>
+        <Link href="/" className="hover:text-orange-400 hidden sm:block">
           <Home size={22} />
-        </Link>{" "}
-        <div className="flex items-center gap-5 whitespace-nowrap">
-          {" "}
+        </Link>
+        <div className="flex items-center gap-3 md:gap-5 whitespace-nowrap">
           {user ? (
-            <div className="flex items-center gap-3">
-              {" "}
+            <div className="hidden md:flex items-center gap-3">
               <Link href="/account" className="flex items-center gap-1">
-                {" "}
-                <User size={20} /> Hi, {user.name}{" "}
-              </Link>{" "}
+                <User size={20} /> Hi, {user.name}
+              </Link>
               <button onClick={logout} className="underline text-sm">
                 Logout
-              </button>{" "}
+              </button>
             </div>
           ) : (
-            <Link href="/login" className="flex items-center gap-1">
-              {" "}
-              <User size={20} /> Login{" "}
+            <Link href="/login" className="hidden md:flex items-center gap-1">
+              <User size={20} /> Login
             </Link>
-          )}{" "}
+          )}
+          <Link href={user ? "/account" : "/login"} className="md:hidden">
+            <User size={22} />
+          </Link>
           <Link href="/wishlist" className="relative">
-            {" "}
-            <Heart size={22} />{" "}
+            <Heart size={22} />
             {wishlist.length > 0 && (
               <span className="absolute -top-2 -right-2 bg-orange-500 text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                {" "}
-                {wishlist.length}{" "}
+                {wishlist.length}
               </span>
-            )}{" "}
-          </Link>{" "}
+            )}
+          </Link>
           <Link href="/cart" className="relative">
-            {" "}
-            <ShoppingCart size={22} />{" "}
+            <ShoppingCart size={22} />
             {cart.length > 0 && (
               <span className="absolute -top-2 -right-2 bg-orange-500 text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                {" "}
-                {cart.length}{" "}
+                {cart.length}
               </span>
-            )}{" "}
-          </Link>{" "}
-        </div>{" "}
+            )}
+          </Link>
+        </div>
       </div>{" "}
-      <div className="bg-slate-950 px-6 py-2 flex gap-6 relative">
+      <div
+        className={`bg-slate-950 px-6 py-2 gap-4 md:gap-6 relative ${menuOpen ? "flex flex-col md:flex-row" : "hidden md:flex"}`}
+      >
         {[
           "Premier League",
           "La Liga",
@@ -143,6 +147,15 @@ export default function Navbar() {
         <Link href="/best-sellers" className="text-orange-400 font-semibold">
           Best Sellers
         </Link>
+        <div className="md:hidden flex flex-col gap-3 pt-3 border-t border-slate-800">
+          {user ? (
+            <button onClick={logout} className="text-left">
+              Logout
+            </button>
+          ) : (
+            <Link href="/login">Login</Link>
+          )}
+        </div>
       </div>{" "}
     </nav>
   );
