@@ -38,7 +38,7 @@ export default function Search() {
               <img
                 src={jersey.images?.[0]}
                 alt={jersey.team}
-                className="h-40 w-full object-cover mb-4 rounded"
+                className="h-40 w-full object-contain bg-gray-50 mb-4 rounded"
               />
             ) : (
               <div className="bg-gray-100 h-40 mb-4 rounded"></div>

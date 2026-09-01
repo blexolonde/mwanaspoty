@@ -54,7 +54,7 @@ export default function CategoryPage() {
               <img
                 src={jersey.images?.[0]}
                 alt={jersey.team}
-                className="h-80 w-full object-cover mb-4 rounded"
+                className="h-80 w-full object-contain bg-gray-50 mb-4 rounded"
               />
             ) : (
               <div className="bg-gray-100 h-80 w-full mb-4 rounded"></div>
