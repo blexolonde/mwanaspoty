@@ -50,9 +50,9 @@ export default function CategoryPage() {
         {sortedJerseys.map((jersey) => (
           <div key={jersey.id} className="border rounded-lg p-5 flex flex-col">
             {" "}
-            {jersey.image ? (
+            {jersey.images?.[0] ? (
               <img
-                src={jersey.image}
+                src={jersey.images?.[0]}
                 alt={jersey.team}
                 className="h-80 w-full object-cover mb-4 rounded"
               />

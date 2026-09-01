@@ -34,9 +34,9 @@ export default function Search() {
             className="border rounded-lg p-4 text-center block hover:shadow-md"
           >
             {" "}
-            {jersey.image ? (
+            {jersey.images?.[0] ? (
               <img
-                src={jersey.image}
+                src={jersey.images?.[0]}
                 alt={jersey.team}
                 className="h-40 w-full object-cover mb-4 rounded"
               />

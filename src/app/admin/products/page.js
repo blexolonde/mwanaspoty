@@ -9,7 +9,7 @@ export default function AdminProducts() {
   const [price, setPrice] = useState("");
   const [league, setLeague] = useState("");
   const [isClassic, setIsClassic] = useState(false);
-  const [imageFile, setImageFile] = useState(null);
+  const [imageFiles, setImageFiles] = useState([]);
   const [uploading, setUploading] = useState(false);
 
   function loadJerseys() {
@@ -25,17 +25,17 @@ export default function AdminProducts() {
   async function handleAdd(e) {
     e.preventDefault();
     setUploading(true);
-    let imageUrl = null;
-    if (imageFile) {
+    let imageUrls = [];
+    if (imageFiles.length > 0) {
       const formData = new FormData();
-      formData.append("image", imageFile);
+      imageFiles.forEach((file) => formData.append("images", file));
       const uploadRes = await fetch("http://localhost:5000/api/upload", {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
         body: formData,
       });
       const uploadData = await uploadRes.json();
-      imageUrl = uploadData.url;
+      imageUrls = uploadData.urls;
     }
     await fetch("http://localhost:5000/api/jerseys", {
       method: "POST",
@@ -48,14 +48,14 @@ export default function AdminProducts() {
         price: Number(price),
         league,
         isClassic,
-        image: imageUrl,
+        images: imageUrls,
       }),
     });
     setTeam("");
     setPrice("");
     setLeague("");
     setIsClassic(false);
-    setImageFile(null);
+    setImageFiles([]);
     setUploading(false);
     loadJerseys();
   }
@@ -97,7 +97,8 @@ export default function AdminProducts() {
         <input
           type="file"
           accept="image/*"
-          onChange={(e) => setImageFile(e.target.files[0])}
+          multiple
+          onChange={(e) => setImageFiles(Array.from(e.target.files))}
           className="text-sm"
         />
         <label className="flex items-center gap-2 text-sm">

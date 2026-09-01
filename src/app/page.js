@@ -40,9 +40,9 @@ function JerseySection({ title, jerseys, shopAllHref, shopAllLabel }) {
               key={jersey.id}
               className="border rounded-lg p-4 flex flex-col min-w-[260px]"
             >
-              {jersey.image ? (
+              {jersey.images?.[0] ? (
                 <img
-                  src={jersey.image}
+                  src={jersey.images?.[0]}
                   alt={jersey.team}
                   className="h-64 w-full object-cover mb-4 rounded"
                 />
