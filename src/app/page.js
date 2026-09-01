@@ -9,14 +9,49 @@ function JerseySection({ title, jerseys, shopAllHref, shopAllLabel }) {
   const itemsPerPage = 4;
   const totalPages = Math.max(1, Math.ceil(jerseys.length / itemsPerPage));
 
-  function goToPage(newPage) {
-    const clamped = Math.max(0, Math.min(newPage, totalPages - 1));
-    setPage(clamped);
+  const isHoveredRef = useRef(false);
+  const manualPauseUntilRef = useRef(0);
+  const resumeTimeoutRef = useRef(null);
+
+  function scrollToPage(target) {
     if (scrollRef.current) {
       const width = scrollRef.current.clientWidth;
-      scrollRef.current.scrollTo({ left: clamped * width, behavior: "smooth" });
+      scrollRef.current.scrollTo({ left: target * width, behavior: "smooth" });
     }
   }
+
+  function goToPage(newPage) {
+    const wrapped = (newPage + totalPages) % totalPages;
+    setPage(wrapped);
+    scrollToPage(wrapped);
+
+    // Pause auto-rotation briefly after a manual navigation
+    manualPauseUntilRef.current = Date.now() + 5000;
+    if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
+    resumeTimeoutRef.current = setTimeout(() => {
+      resumeTimeoutRef.current = null;
+    }, 5000);
+  }
+
+  useEffect(() => {
+    if (totalPages <= 1) return;
+    const interval = setInterval(() => {
+      if (isHoveredRef.current || Date.now() < manualPauseUntilRef.current)
+        return;
+      setPage((prev) => {
+        const next = (prev + 1) % totalPages;
+        scrollToPage(next);
+        return next;
+      });
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [totalPages]);
+
+  useEffect(() => {
+    return () => {
+      if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
+    };
+  }, []);
 
   return (
     <section className="py-12 px-6">
@@ -24,13 +59,15 @@ function JerseySection({ title, jerseys, shopAllHref, shopAllLabel }) {
       {jerseys.length === 0 && (
         <p className="text-center text-gray-400">No jerseys to show yet.</p>
       )}
-      <div className="relative max-w-6xl mx-auto">
-        <button
-          onClick={() => goToPage(page - 1)}
-          className="absolute -left-4 top-1/2 -translate-y-1/2 bg-white border rounded-full p-2 shadow z-10 hidden md:block"
-        >
-          <ChevronLeft size={20} />
-        </button>
+      <div
+        className="relative max-w-6xl mx-auto"
+        onMouseEnter={() => {
+          isHoveredRef.current = true;
+        }}
+        onMouseLeave={() => {
+          isHoveredRef.current = false;
+        }}
+      >
         <div
           ref={scrollRef}
           className="flex gap-6 overflow-x-auto scroll-smooth no-scrollbar"
@@ -60,23 +97,31 @@ function JerseySection({ title, jerseys, shopAllHref, shopAllLabel }) {
             </div>
           ))}
         </div>
-        <div className="flex justify-center gap-2 mt-4">
-          {Array.from({ length: totalPages }).map((_, i) => (
-            <button
-              key={i}
-              onClick={() => goToPage(i)}
-              className={`h-2 rounded-full transition-all ${
-                i === page ? "w-6 bg-black" : "w-2 bg-gray-300"
-              }`}
-            />
-          ))}
+        <div className="flex items-center justify-center gap-4 mt-4">
+          <button
+            onClick={() => goToPage(page - 1)}
+            className="text-gray-500 hover:text-black"
+          >
+            <ChevronLeft size={18} />
+          </button>
+          <div className="flex gap-2">
+            {Array.from({ length: totalPages }).map((_, i) => (
+              <button
+                key={i}
+                onClick={() => goToPage(i)}
+                className={`h-2 rounded-full transition-all ${
+                  i === page ? "w-6 bg-black" : "w-2 bg-gray-300"
+                }`}
+              />
+            ))}
+          </div>
+          <button
+            onClick={() => goToPage(page + 1)}
+            className="text-gray-500 hover:text-black"
+          >
+            <ChevronRight size={18} />
+          </button>
         </div>
-        <button
-          onClick={() => goToPage(page + 1)}
-          className="absolute -right-4 top-1/2 -translate-y-1/2 bg-white border rounded-full p-2 shadow z-10 hidden md:block"
-        >
-          <ChevronRight size={20} />
-        </button>
       </div>
       {shopAllHref && (
         <div className="text-center mt-8">
@@ -95,76 +140,70 @@ function JerseySection({ title, jerseys, shopAllHref, shopAllLabel }) {
 export default function Home() {
   const [classicKits, setClassicKits] = useState([]);
   const [topSelling, setTopSelling] = useState([]);
+
   useEffect(() => {
     fetch("http://localhost:5000/api/jerseys?classic=true")
       .then((res) => res.json())
-      .then((data) => setClassicKits(data.slice(0, 4)));
+      .then((data) => setClassicKits(data.slice(0, 12)));
     fetch("http://localhost:5000/api/best-sellers")
       .then((res) => res.json())
-      .then((data) => setTopSelling(data.slice(0, 4)));
+      .then((data) => setTopSelling(data.slice(0, 12)));
   }, []);
+
   return (
     <main>
-      {" "}
       <section className="relative bg-gradient-to-r from-slate-900 via-slate-800 to-orange-900 text-white py-20 px-6 overflow-hidden">
-        {" "}
         <div className="max-w-3xl">
-          {" "}
           <h1 className="text-5xl font-extrabold mb-4 leading-tight">
-            {" "}
             AUTHENTIC JERSEYS
             <br />
-            FOR TRUE FANS{" "}
-          </h1>{" "}
+            FOR TRUE FANS
+          </h1>
           <p className="text-lg text-gray-300 mb-8">
-            {" "}
             Football jerseys & custom apparel, made for true fans across Kenya
-            and beyond.{" "}
-          </p>{" "}
+            and beyond.
+          </p>
           <Link
             href="/shop"
             className="inline-block bg-orange-500 hover:bg-orange-600 text-white font-semibold px-8 py-3 rounded-full"
           >
-            {" "}
-            Shop Now{" "}
-          </Link>{" "}
-        </div>{" "}
-      </section>{" "}
+            Shop Now
+          </Link>
+        </div>
+      </section>
+
       <section className="text-center py-16 px-6">
-        {" "}
         <h2 className="text-3xl font-extrabold text-orange-500 mb-3">
           MWANASPOTY
-        </h2>{" "}
+        </h2>
         <p className="text-gray-600 max-w-2xl mx-auto mb-2">
-          {" "}
-          Official-style jerseys, fast dispatch, and easy returns.{" "}
-        </p>{" "}
+          Official-style jerseys, fast dispatch, and easy returns.
+        </p>
         <p className="text-gray-600 max-w-2xl mx-auto mb-8">
-          {" "}
           Welcome to MwanaSpoty — your home for football jerseys and custom
           apparel. Browse top clubs from the Premier League, La Liga, and East
-          African leagues, all in one place.{" "}
-        </p>{" "}
+          African leagues, all in one place.
+        </p>
         <Link
           href="/shop"
           className="inline-block border border-black px-6 py-2 rounded-full font-semibold hover:bg-black hover:text-white"
         >
-          {" "}
-          Browse All Jerseys{" "}
-        </Link>{" "}
-      </section>{" "}
+          Browse All Jerseys
+        </Link>
+      </section>
+
       <JerseySection
         title="Classic Kits"
         jerseys={classicKits}
         shopAllHref="/shop"
         shopAllLabel="Shop Classic Kits"
-      />{" "}
+      />
       <JerseySection
         title="Top Selling This Week"
         jerseys={topSelling}
         shopAllHref="/best-sellers"
         shopAllLabel="Shop Best Sellers"
-      />{" "}
+      />
     </main>
   );
 }
