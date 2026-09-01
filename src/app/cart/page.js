@@ -37,6 +37,11 @@ export default function Cart() {
     clearCart();
     router.push(`/account/orders/${order.id}`);
   }
+  function badgeLabel(badge) {
+    if (badge === "premier-league") return "Premier League Badge";
+    if (badge === "champions-league") return "Champions League Badge";
+    return null;
+  }
   if (cart.length === 0) {
     return <p className="p-6 text-center">Your cart is empty.</p>;
   }
@@ -47,13 +52,27 @@ export default function Cart() {
       {cart.map((item, index) => (
         <div
           key={index}
-          className="flex items-center justify-between border-b py-4"
+          className="flex items-start justify-between border-b py-4"
         >
           {" "}
           <div>
             {" "}
             <h2 className="font-semibold">{item.team}</h2>{" "}
-            <p className="text-gray-600">KSh {item.price}</p>{" "}
+            {item.size && (
+              <p className="text-sm text-gray-500">Size: {item.size}</p>
+            )}{" "}
+            {(item.customName || item.customNumber) && (
+              <p className="text-sm text-gray-500">
+                {" "}
+                Print: {item.customName} {item.customNumber}{" "}
+              </p>
+            )}{" "}
+            {badgeLabel(item.badge) && (
+              <p className="text-sm text-gray-500">{badgeLabel(item.badge)}</p>
+            )}{" "}
+            <p className="text-gray-800 font-medium mt-1">
+              KSh {item.price}
+            </p>{" "}
           </div>{" "}
           <button
             onClick={() => removeFromCart(item.id)}
