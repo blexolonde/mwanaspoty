@@ -2,6 +2,7 @@
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import HeroCarousel from "./components/HeroCarousel";
 
 function JerseySection({ title, jerseys, shopAllHref, shopAllLabel }) {
   const scrollRef = useRef(null);
@@ -25,7 +26,6 @@ function JerseySection({ title, jerseys, shopAllHref, shopAllLabel }) {
     setPage(wrapped);
     scrollToPage(wrapped);
 
-    // Pause auto-rotation briefly after a manual navigation
     manualPauseUntilRef.current = Date.now() + 5000;
     if (resumeTimeoutRef.current) clearTimeout(resumeTimeoutRef.current);
     resumeTimeoutRef.current = setTimeout(() => {
@@ -152,25 +152,7 @@ export default function Home() {
 
   return (
     <main>
-      <section className="relative bg-gradient-to-r from-slate-900 via-slate-800 to-orange-900 text-white py-20 px-6 overflow-hidden">
-        <div className="max-w-3xl">
-          <h1 className="text-5xl font-extrabold mb-4 leading-tight">
-            AUTHENTIC JERSEYS
-            <br />
-            FOR TRUE FANS
-          </h1>
-          <p className="text-lg text-gray-300 mb-8">
-            Football jerseys & custom apparel, made for true fans across Kenya
-            and beyond.
-          </p>
-          <Link
-            href="/shop"
-            className="inline-block bg-orange-500 hover:bg-orange-600 text-white font-semibold px-8 py-3 rounded-full"
-          >
-            Shop Now
-          </Link>
-        </div>
-      </section>
+      <HeroCarousel />
 
       <section className="text-center py-16 px-6">
         <h2 className="text-3xl font-extrabold text-orange-500 mb-3">
