@@ -10,7 +10,7 @@ export default function OrderDetails() {
 
   useEffect(() => {
     if (!token) return;
-    fetch(`http://localhost:5000/api/orders/${id}`, {
+    fetch(`http://192.168.100.16:5000/api/orders/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())

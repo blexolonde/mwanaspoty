@@ -18,7 +18,7 @@ export default function AdminCustomers() {
 
   useEffect(() => {
     if (!token) return;
-    fetch("http://localhost:5000/api/admin/customers", {
+    fetch("http://192.168.100.16:5000/api/admin/customers", {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())

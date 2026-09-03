@@ -9,18 +9,20 @@ const ITEMS = [
 
 export default function DeliveryInfoBar() {
   return (
-    <section className="py-8 px-6">
-      <div className="grid grid-cols-2 gap-6 md:flex md:justify-center md:gap-16 max-w-6xl mx-auto">
+    <section className="py-6 sm:py-8 px-4 sm:px-6">
+      <div className="grid grid-cols-2 gap-4 sm:gap-6 md:flex md:justify-center md:gap-16 max-w-6xl mx-auto">
         {ITEMS.map((item, i) => {
           const Icon = item.icon;
           return (
-            <div key={i} className="flex items-center gap-3">
-              <div className="h-12 w-12 rounded-full border-2 border-blue-500 flex items-center justify-center flex-shrink-0">
-                <Icon size={20} className="text-blue-500" />
+            <div key={i} className="flex items-center gap-2 sm:gap-3">
+              <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full border-2 border-accent flex items-center justify-center flex-shrink-0">
+                <Icon size={18} className="text-accent-dark" />
               </div>
               <div>
-                <p className="font-bold text-sm">{item.title}</p>
-                <p className="text-xs text-gray-500">{item.subtext}</p>
+                <p className="font-bold text-xs sm:text-sm text-navy">
+                  {item.title}
+                </p>
+                <p className="text-xs text-muted">{item.subtext}</p>
               </div>
             </div>
           );

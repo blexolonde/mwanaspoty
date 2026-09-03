@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function BestSellers() {
   const [jerseys, setJerseys] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:5000/api/best-sellers")
+    fetch("http://192.168.100.16:5000/api/best-sellers")
       .then((res) => res.json())
       .then((data) => setJerseys(data));
   }, []);

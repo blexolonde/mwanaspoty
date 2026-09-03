@@ -14,7 +14,7 @@ export default function ProductDetails() {
   const [customNumber, setCustomNumber] = useState("");
   const [badge, setBadge] = useState("none");
   useEffect(() => {
-    fetch(`http://localhost:5000/api/jerseys/${id}`)
+    fetch(`http://192.168.100.16:5000/api/jerseys/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setJersey(data);

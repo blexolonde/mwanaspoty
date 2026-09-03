@@ -39,19 +39,29 @@ export default function AdminAnalytics() {
   useEffect(() => {
     if (!token) return;
     const headers = { Authorization: `Bearer ${token}` };
-    fetch("http://localhost:5000/api/admin/analytics/best-sellers", { headers })
+    fetch("http://192.168.100.16:5000/api/admin/analytics/best-sellers", {
+      headers,
+    })
       .then((res) => res.json())
       .then(setBestSellers);
-    fetch("http://localhost:5000/api/admin/analytics/best-leagues", { headers })
+    fetch("http://192.168.100.16:5000/api/admin/analytics/best-leagues", {
+      headers,
+    })
       .then((res) => res.json())
       .then(setBestLeagues);
-    fetch("http://localhost:5000/api/admin/analytics/low-stock", { headers })
+    fetch("http://192.168.100.16:5000/api/admin/analytics/low-stock", {
+      headers,
+    })
       .then((res) => res.json())
       .then(setLowStock);
-    fetch("http://localhost:5000/api/admin/analytics/segments", { headers })
+    fetch("http://192.168.100.16:5000/api/admin/analytics/segments", {
+      headers,
+    })
       .then((res) => res.json())
       .then(setSegments);
-    fetch("http://localhost:5000/api/admin/analytics/sales-trend", { headers })
+    fetch("http://192.168.100.16:5000/api/admin/analytics/sales-trend", {
+      headers,
+    })
       .then((res) => res.json())
       .then(setTrend);
   }, [token]);

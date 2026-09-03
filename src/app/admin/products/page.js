@@ -14,7 +14,7 @@ export default function AdminProducts() {
   const [uploading, setUploading] = useState(false);
 
   function loadJerseys() {
-    fetch("http://localhost:5000/api/jerseys")
+    fetch("http://192.168.100.16:5000/api/jerseys")
       .then((res) => res.json())
       .then((data) => setJerseys(data));
   }
@@ -30,7 +30,7 @@ export default function AdminProducts() {
     if (imageFiles.length > 0) {
       const formData = new FormData();
       imageFiles.forEach((file) => formData.append("images", file));
-      const uploadRes = await fetch("http://localhost:5000/api/upload", {
+      const uploadRes = await fetch("http://192.168.100.16:5000/api/upload", {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
         body: formData,
@@ -38,7 +38,7 @@ export default function AdminProducts() {
       const uploadData = await uploadRes.json();
       imageUrls = uploadData.urls;
     }
-    await fetch("http://localhost:5000/api/jerseys", {
+    await fetch("http://192.168.100.16:5000/api/jerseys", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -62,7 +62,7 @@ export default function AdminProducts() {
   }
 
   async function handleDelete(id) {
-    await fetch(`http://localhost:5000/api/jerseys/${id}`, {
+    await fetch(`http://192.168.100.16:5000/api/jerseys/${id}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     });

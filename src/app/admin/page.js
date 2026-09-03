@@ -11,13 +11,15 @@ export default function AdminDashboard() {
   useEffect(() => {
     if (!token) return;
     const headers = { Authorization: `Bearer ${token}` };
-    fetch("http://localhost:5000/api/admin/orders", { headers })
+    fetch("http://192.168.100.16:5000/api/admin/orders", { headers })
       .then((res) => res.json())
       .then(setOrders);
-    fetch("http://localhost:5000/api/admin/customers", { headers })
+    fetch("http://192.168.100.16:5000/api/admin/customers", { headers })
       .then((res) => res.json())
       .then(setCustomers);
-    fetch("http://localhost:5000/api/admin/analytics/low-stock", { headers })
+    fetch("http://192.168.100.16:5000/api/admin/analytics/low-stock", {
+      headers,
+    })
       .then((res) => res.json())
       .then(setLowStock);
   }, [token]);

@@ -1,7 +1,7 @@
 import Link from "next/link";
 export default function Footer() {
   return (
-    <footer className="bg-slate-900 text-gray-300 mt-16">
+    <footer className="bg-navy-deep text-gray-300 mt-16">
       {" "}
       <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-2 md:grid-cols-4 gap-8">
         {" "}
@@ -13,17 +13,17 @@ export default function Footer() {
           <ul className="space-y-2 text-sm">
             {" "}
             <li>
-              <Link href="/account" className="hover:text-white">
+              <Link href="/account" className="hover:text-accent">
                 My Account
               </Link>
             </li>{" "}
             <li>
-              <Link href="/account/orders" className="hover:text-white">
+              <Link href="/account/orders" className="hover:text-accent">
                 Track My Order
               </Link>
             </li>{" "}
             <li>
-              <Link href="/cart" className="hover:text-white">
+              <Link href="/cart" className="hover:text-accent">
                 Cart
               </Link>
             </li>{" "}
@@ -35,22 +35,22 @@ export default function Footer() {
           <ul className="space-y-2 text-sm">
             {" "}
             <li>
-              <Link href="/shop" className="hover:text-white">
+              <Link href="/shop" className="hover:text-accent">
                 All Jerseys
               </Link>
             </li>{" "}
             <li>
-              <Link href="/categories" className="hover:text-white">
+              <Link href="/categories" className="hover:text-accent">
                 Categories
               </Link>
             </li>{" "}
             <li>
-              <Link href="/best-sellers" className="hover:text-white">
+              <Link href="/best-sellers" className="hover:text-accent">
                 Best Sellers
               </Link>
             </li>{" "}
             <li>
-              <Link href="/wishlist" className="hover:text-white">
+              <Link href="/wishlist" className="hover:text-accent">
                 Wishlist
               </Link>
             </li>{" "}
@@ -62,12 +62,12 @@ export default function Footer() {
           <ul className="space-y-2 text-sm">
             {" "}
             <li>
-              <Link href="/register" className="hover:text-white">
+              <Link href="/register" className="hover:text-accent">
                 Create Account
               </Link>
             </li>{" "}
             <li>
-              <Link href="/login" className="hover:text-white">
+              <Link href="/login" className="hover:text-accent">
                 Login
               </Link>
             </li>{" "}
@@ -78,12 +78,17 @@ export default function Footer() {
           <h3 className="text-white font-semibold mb-3">Follow Us</h3>{" "}
           <div className="flex gap-4">
             {" "}
-            <span>Facebook</span> <span>Instagram</span>{" "}
-            <span>Twitter</span>{" "}
+            <span className="hover:text-accent cursor-pointer">
+              Facebook
+            </span>{" "}
+            <span className="hover:text-accent cursor-pointer">Instagram</span>{" "}
+            <span className="hover:text-accent cursor-pointer">
+              Twitter
+            </span>{" "}
           </div>{" "}
         </div>{" "}
       </div>{" "}
-      <div className="border-t border-slate-700 py-4 text-center text-xs text-gray-500">
+      <div className="border-t border-white/10 py-4 text-center text-xs text-gray-500">
         {" "}
         © {new Date().getFullYear()} MwanaSpoty. All rights reserved.{" "}
       </div>{" "}

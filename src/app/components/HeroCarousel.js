@@ -6,48 +6,63 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 const HERO_IMAGES = [
   {
     src: "/hero/real madrid green 26-27 models.jpg",
-    alt: "Fan wearing a Premier League jersey",
+    alt: "Green Real Madrid jersey modeling the 26-27 kits",
     position: "object-top",
   },
   {
     src: "/hero/dortmund yellow 26-27 models.jpg",
-    alt: "Fan wearing a La Liga jersey",
+    alt: "Yellow Dortmund jersey modeling the 26-27 kits",
     position: "object-top",
-  },
-  {
-    src: "/hero/bayern away 26-27.png",
-    alt: "Fan wearing a KPL jersey",
-    position: "object-[center_20%]",
   },
   {
     src: "/hero/Arsenal blue modeling 26-27.jpg",
-    alt: "Fan wearing a Bundesliga jersey",
+    alt: "Arsenal 3rd kit 26-27 modeling",
     position: "object-[center_40%]",
   },
   {
+    src: "/hero/bayern away 26-27.png",
+    alt: "Three Bayern muchen players modeling the 26-27 kits",
+    position: "object-[center_20%]",
+  },
+  {
     src: "/hero/-Azam-26-27 models.jpg",
-    alt: "Fan wearing a KPL jersey",
+    alt: "Azam players modeling the 26-27 kits",
     position: "object-top",
   },
   {
-    src: "/hero/simba red 26-27.jpg",
-    alt: "Fan wearing a KPL jersey",
-    position: "object-center",
-  },
-  {
-    src: "/hero/juventus 3rd kit models.jpg",
-    alt: "Fan wearing a KPL jersey",
-    position: "object-top",
-  },
-  {
-    src: "/hero/raphina home barca 26-27.jpg",
-    alt: "Fan wearing a KPL jersey",
+    src: "/hero/simba red.png",
+    alt: "Simaba Tanzania player modeling the 26-27 kits",
     position: "object-[center_05%]",
   },
   {
-    src: "/hero/Haaland home model 26-27.jpg",
-    alt: "Fan wearing a KPL jersey",
+    src: "/hero/man united.png",
+    alt: "Man united 3 players modeling the 26-27 kits",
     position: "object-top",
+  },
+  {
+    src: "/hero/juventus 3rd kit models.jpg",
+    alt: "Juventus player modeling the away 26-27 kits",
+    position: "object-top",
+  },
+  {
+    src: "/hero/frankie barca.jpg",
+    alt: "Barcelona player modeling the 26-27 kits",
+    position: "object-[center_02%]",
+  },
+  {
+    src: "/hero/Haaland home model 26-27.jpg",
+    alt: "Image of Haaland wearing a Manchester City jersey",
+    position: "object-top",
+  },
+  {
+    src: "/hero/liverpool.png",
+    alt: "Van dijk wearing a liverpool jersey",
+    position: "object-top",
+  },
+  {
+    src: "/hero/chelsea team phot.png",
+    alt: "Chelsea team photo modeling the 26-27 kits",
+    position: "object-[center_60%]",
   },
 ];
 
@@ -82,7 +97,7 @@ export default function HeroCarousel() {
   }, [index]);
 
   return (
-    <section className="relative bg-slate-900 text-white overflow-hidden">
+    <section className="relative bg-navy text-white overflow-hidden">
       <div className="grid md:grid-cols-[42%_58%] min-h-[600px]">
         {/* Image half */}
         <div className="relative order-1 md:order-2 min-h-[320px] md:min-h-0">
@@ -106,7 +121,7 @@ export default function HeroCarousel() {
             }`}
           />
           {/* Gradient blend */}
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-slate-900/70 via-transparent to-transparent md:bg-gradient-to-l md:from-transparent md:to-slate-900/10" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-navy/70 via-transparent to-transparent md:bg-gradient-to-l md:from-transparent md:to-navy/10" />
 
           {total > 1 && (
             <>
@@ -131,17 +146,17 @@ export default function HeroCarousel() {
         {/* Text half */}
         <div className="relative order-2 md:order-1 z-10 flex flex-col justify-center px-6 py-14 md:px-12 md:py-16">
           <h1 className="mb-4 text-4xl font-extrabold leading-tight md:text-5xl">
-            AUTHENTIC JERSEYS
+            Authentic jerseys
             <br />
-            FOR TRUE FANS
+            for true fans
           </h1>
-          <p className="mb-8 max-w-md text-lg text-slate-300">
+          <p className="mb-8 max-w-md text-lg text-white/70">
             Football jerseys & custom apparel, made for true fans across Kenya
             and beyond.
           </p>
           <Link
             href="/shop"
-            className="inline-block w-fit rounded-full bg-orange-500 px-8 py-3 font-semibold text-white hover:bg-orange-600"
+            className="inline-block w-fit rounded-full bg-accent px-8 py-3 font-semibold text-white hover:bg-accent-dark transition-colors"
           >
             Buy Now
           </Link>
@@ -154,7 +169,7 @@ export default function HeroCarousel() {
                   onClick={() => goTo(i)}
                   aria-label={`Go to slide ${i + 1}`}
                   className={`h-2 rounded-full transition-all ${
-                    i === index ? "w-6 bg-orange-500" : "w-2 bg-slate-600"
+                    i === index ? "w-6 bg-accent" : "w-2 bg-white/30"
                   }`}
                 />
               ))}

@@ -13,7 +13,7 @@ export default function AdminOrders() {
   const [orders, setOrders] = useState([]);
 
   function loadOrders() {
-    fetch("http://localhost:5000/api/admin/orders", {
+    fetch("http://192.168.100.16:5000/api/admin/orders", {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())
@@ -25,7 +25,7 @@ export default function AdminOrders() {
   }, [token]);
 
   async function handleStatusChange(id, status) {
-    await fetch(`http://localhost:5000/api/admin/orders/${id}`, {
+    await fetch(`http://192.168.100.16:5000/api/admin/orders/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

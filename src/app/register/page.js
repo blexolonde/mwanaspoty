@@ -10,7 +10,7 @@ export default function Register() {
   async function handleSubmit(e) {
     e.preventDefault();
     setError("");
-    const res = await fetch("http://localhost:5000/api/register", {
+    const res = await fetch("http://192.168.100.16:5000/api/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, email, password }),
@@ -23,9 +23,11 @@ export default function Register() {
     router.push("/login");
   }
   return (
-    <main className="px-6 py-12 max-w-md mx-auto">
+    <main className="px-4 sm:px-6 py-10 sm:py-12 max-w-md mx-auto">
       {" "}
-      <h1 className="text-3xl font-bold mb-8">Register</h1>{" "}
+      <h1 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-navy">
+        Register
+      </h1>{" "}
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         {" "}
         <input
@@ -33,7 +35,7 @@ export default function Register() {
           placeholder="Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="border rounded-lg px-4 py-2"
+          className="border border-line rounded-lg px-4 py-2 outline-none focus:border-accent transition-colors"
           required
         />{" "}
         <input
@@ -41,7 +43,7 @@ export default function Register() {
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="border rounded-lg px-4 py-2"
+          className="border border-line rounded-lg px-4 py-2 outline-none focus:border-accent transition-colors"
           required
         />{" "}
         <input
@@ -49,13 +51,13 @@ export default function Register() {
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="border rounded-lg px-4 py-2"
+          className="border border-line rounded-lg px-4 py-2 outline-none focus:border-accent transition-colors"
           required
         />{" "}
         {error && <p className="text-red-600 text-sm">{error}</p>}{" "}
         <button
           type="submit"
-          className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800"
+          className="bg-accent text-white px-6 py-3 rounded-lg font-semibold hover:bg-accent-dark transition-colors"
         >
           {" "}
           Register{" "}

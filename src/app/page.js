@@ -57,10 +57,12 @@ function JerseySection({ title, jerseys, shopAllHref, shopAllLabel }) {
   }, []);
 
   return (
-    <section className="py-12 px-6">
-      <h2 className="text-2xl font-bold text-center mb-8">{title}</h2>
+    <section className="py-8 sm:py-10 md:py-12 px-4 sm:px-6">
+      <h2 className="text-xl sm:text-2xl font-bold text-center mb-6 sm:mb-8 text-navy">
+        {title}
+      </h2>
       {jerseys.length === 0 && (
-        <p className="text-center text-gray-400">No jerseys to show yet.</p>
+        <p className="text-center text-muted">No jerseys to show yet.</p>
       )}
       <div
         className="relative max-w-6xl mx-auto"
@@ -73,27 +75,29 @@ function JerseySection({ title, jerseys, shopAllHref, shopAllLabel }) {
       >
         <div
           ref={scrollRef}
-          className="flex gap-6 overflow-x-auto scroll-smooth no-scrollbar"
+          className="flex gap-4 sm:gap-6 overflow-x-auto scroll-smooth no-scrollbar"
         >
           {jerseys.map((jersey) => (
             <div
               key={jersey.id}
-              className="border rounded-lg p-4 flex flex-col min-w-[260px]"
+              className="border border-line rounded-lg p-4 flex flex-col min-w-[220px] sm:min-w-[240px] md:min-w-[260px] bg-white"
             >
               {jersey.images?.[0] ? (
                 <img
                   src={jersey.images?.[0]}
                   alt={jersey.team}
-                  className="h-64 w-full object-contain bg-gray-50 mb-4 rounded"
+                  className="h-48 sm:h-56 md:h-64 w-full object-contain bg-bg-soft mb-4 rounded"
                 />
               ) : (
-                <div className="bg-gray-100 h-64 w-full mb-4 rounded"></div>
+                <div className="bg-bg-soft h-48 sm:h-56 md:h-64 w-full mb-4 rounded"></div>
               )}
-              <p className="font-bold text-lg mb-1">KSh {jersey.price}</p>
-              <p className="text-sm text-gray-700 mb-3">{jersey.team}</p>
+              <p className="font-bold text-base sm:text-lg mb-1 text-navy">
+                KSh {jersey.price}
+              </p>
+              <p className="text-sm text-muted mb-3">{jersey.team}</p>
               <Link
                 href={`/shop/${jersey.id}`}
-                className="border border-green-600 text-green-700 rounded-full px-5 py-1 text-sm font-semibold text-center hover:bg-green-600 hover:text-white"
+                className="border border-accent text-accent-dark rounded-full px-5 py-1 text-sm font-semibold text-center hover:bg-accent hover:text-white transition-colors"
               >
                 Buy now
               </Link>
@@ -103,7 +107,8 @@ function JerseySection({ title, jerseys, shopAllHref, shopAllLabel }) {
         <div className="flex items-center justify-center gap-4 mt-4">
           <button
             onClick={() => goToPage(page - 1)}
-            className="text-gray-500 hover:text-black"
+            className="text-muted hover:text-navy"
+            aria-label="Previous"
           >
             <ChevronLeft size={18} />
           </button>
@@ -112,25 +117,27 @@ function JerseySection({ title, jerseys, shopAllHref, shopAllLabel }) {
               <button
                 key={i}
                 onClick={() => goToPage(i)}
+                aria-label={`Go to page ${i + 1}`}
                 className={`h-2 rounded-full transition-all ${
-                  i === page ? "w-6 bg-black" : "w-2 bg-gray-300"
+                  i === page ? "w-6 bg-navy" : "w-2 bg-line"
                 }`}
               />
             ))}
           </div>
           <button
             onClick={() => goToPage(page + 1)}
-            className="text-gray-500 hover:text-black"
+            className="text-muted hover:text-navy"
+            aria-label="Next"
           >
             <ChevronRight size={18} />
           </button>
         </div>
       </div>
       {shopAllHref && (
-        <div className="text-center mt-8">
+        <div className="text-center mt-6 sm:mt-8">
           <Link
             href={shopAllHref}
-            className="inline-block border border-black rounded-full px-6 py-2 font-semibold hover:bg-black hover:text-white"
+            className="inline-block border border-accent text-accent-dark rounded-full px-5 sm:px-6 py-2 font-semibold hover:bg-accent hover:text-white transition-colors"
           >
             {shopAllLabel}
           </Link>
@@ -145,10 +152,10 @@ export default function Home() {
   const [topSelling, setTopSelling] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/jerseys?classic=true")
+    fetch("http://192.168.100.16:5000/api/jerseys?classic=true")
       .then((res) => res.json())
       .then((data) => setClassicKits(data.slice(0, 12)));
-    fetch("http://localhost:5000/api/best-sellers")
+    fetch("http://192.168.100.16:5000/api/best-sellers")
       .then((res) => res.json())
       .then((data) => setTopSelling(data.slice(0, 12)));
   }, []);
@@ -157,23 +164,25 @@ export default function Home() {
     <main>
       <HeroCarousel />
 
-      <section className="text-center py-16 px-6">
-        <h2 className="text-3xl font-extrabold text-orange-500 mb-3">
-          MWANASPOTY
+      <DeliveryInfoBar />
+
+      <section className="text-center py-10 sm:py-14 md:py-16 px-4 sm:px-6">
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-accent mb-3">
+          MwanaSpoty
         </h2>
-        <p className="text-gray-600 max-w-2xl mx-auto mb-2">
+        <p className="text-muted max-w-2xl mx-auto mb-2 text-sm sm:text-base">
           Official-style jerseys, fast dispatch, and easy returns.
         </p>
-        <p className="text-gray-600 max-w-2xl mx-auto mb-8">
+        <p className="text-muted max-w-2xl mx-auto mb-6 sm:mb-8 text-sm sm:text-base">
           Welcome to MwanaSpoty — your home for football jerseys and custom
           apparel. Browse top clubs from the Premier League, La Liga, and East
           African leagues, all in one place.
         </p>
         <Link
           href="/shop"
-          className="inline-block border border-black px-6 py-2 rounded-full font-semibold hover:bg-black hover:text-white"
+          className="inline-block bg-accent text-white px-5 sm:px-6 py-2 rounded-full font-semibold hover:bg-accent-dark transition-colors"
         >
-          Browse All Jerseys
+          Browse all jerseys
         </Link>
       </section>
 
@@ -192,8 +201,6 @@ export default function Home() {
         shopAllHref="/best-sellers"
         shopAllLabel="Shop Best Sellers"
       />
-
-      <DeliveryInfoBar />
 
       <PaymentMethods />
     </main>

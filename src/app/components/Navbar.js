@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Search, Heart, ShoppingCart, User, Home, Menu, X } from "lucide-react";
 import { useCart } from "./CartContext";
@@ -18,7 +19,7 @@ export default function Navbar() {
   const router = useRouter();
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/jerseys")
+    fetch("http://192.168.100.16:5000/api/jerseys")
       .then((res) => res.json())
       .then((data) => setAllJerseys(data));
   }, []);
@@ -29,17 +30,21 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="bg-slate-900 text-white shadow-md">
+    <nav className="bg-navy text-white shadow-md">
       {" "}
       <div className="flex items-center justify-between px-4 md:px-8 py-4 gap-3 md:gap-6">
         <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden">
           {menuOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
-        <Link
-          href="/"
-          className="text-xl md:text-2xl font-bold whitespace-nowrap"
-        >
-          MwanaSpoty
+        <Link href="/" className="flex items-center whitespace-nowrap shrink-0">
+          <Image
+            src="/mwanaspoty-logo.png"
+            alt="MwanaSpoty"
+            width={140}
+            height={40}
+            priority
+            className="h-8 sm:h-10 w-auto"
+          />
         </Link>
         <form
           onSubmit={handleSearch}
@@ -54,14 +59,14 @@ export default function Navbar() {
           />
           <button
             type="submit"
-            className="bg-orange-500 hover:bg-orange-600 rounded-r-full px-5"
+            className="bg-accent hover:bg-accent-dark rounded-r-full px-5 transition-colors"
           >
             <Search size={22} />
           </button>
         </form>
         <Link
           href="/"
-          className="hover:text-orange-400 transition-colors duration-200 hidden sm:block"
+          className="hover:text-accent transition-colors duration-200 hidden sm:block"
         >
           <Home size={26} />
         </Link>
@@ -85,22 +90,22 @@ export default function Navbar() {
           </Link>
           <Link
             href="/wishlist"
-            className="relative hover:text-orange-400 transition-colors duration-200"
+            className="relative hover:text-accent transition-colors duration-200"
           >
             <Heart size={26} />
             {wishlist.length > 0 && (
-              <span className="absolute -top-2 -right-2 bg-orange-500 text-xs rounded-full w-4 h-4 flex items-center justify-center">
+              <span className="absolute -top-2 -right-2 bg-accent text-xs rounded-full w-4 h-4 flex items-center justify-center">
                 {wishlist.length}
               </span>
             )}
           </Link>
           <Link
             href="/cart"
-            className="relative hover:text-orange-400 transition-colors duration-200"
+            className="relative hover:text-accent transition-colors duration-200"
           >
             <ShoppingCart size={26} />
             {cart.length > 0 && (
-              <span className="absolute -top-2 -right-2 bg-orange-500 text-xs rounded-full w-4 h-4 flex items-center justify-center">
+              <span className="absolute -top-2 -right-2 bg-accent text-xs rounded-full w-4 h-4 flex items-center justify-center">
                 {cart.length}
               </span>
             )}
@@ -108,7 +113,7 @@ export default function Navbar() {
         </div>
       </div>{" "}
       <div
-        className={`bg-slate-950 px-6 py-2.5 gap-4 md:gap-6 text-sm md:text-base relative ${menuOpen ? "flex flex-col md:flex-row" : "hidden md:flex"}`}
+        className={`bg-navy-deep px-6 py-2.5 gap-4 md:gap-6 text-sm md:text-base relative ${menuOpen ? "flex flex-col md:flex-row" : "hidden md:flex"}`}
       >
         {[
           "Premier League",
@@ -131,7 +136,7 @@ export default function Navbar() {
           >
             <Link
               href={`/categories/${encodeURIComponent(league)}`}
-              className="hover:text-orange-400 transition-colors duration-200 pb-1 border-b-2 border-transparent hover:border-orange-400"
+              className="hover:text-accent transition-colors duration-200 pb-1 border-b-2 border-transparent hover:border-accent"
             >
               {league}
             </Link>
@@ -157,10 +162,10 @@ export default function Navbar() {
             )}
           </div>
         ))}
-        <Link href="/best-sellers" className="text-orange-400 font-semibold">
+        <Link href="/best-sellers" className="text-accent font-semibold">
           Best Sellers
         </Link>
-        <div className="md:hidden flex flex-col gap-3 pt-3 border-t border-slate-800">
+        <div className="md:hidden flex flex-col gap-3 pt-3 border-t border-white/10">
           {user ? (
             <button onClick={logout} className="text-left">
               Logout

@@ -21,7 +21,7 @@ export default function Cart() {
       price: item.price,
       quantity: 1,
     }));
-    const res = await fetch("http://localhost:5000/api/orders", {
+    const res = await fetch("http://192.168.100.16:5000/api/orders", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -43,40 +43,40 @@ export default function Cart() {
     return null;
   }
   if (cart.length === 0) {
-    return <p className="p-6 text-center">Your cart is empty.</p>;
+    return <p className="p-6 text-center text-muted">Your cart is empty.</p>;
   }
   return (
-    <main className="px-6 py-12 max-w-2xl mx-auto">
+    <main className="px-4 sm:px-6 py-10 sm:py-12 max-w-2xl mx-auto">
       {" "}
-      <h1 className="text-3xl font-bold mb-8">Your Cart</h1>{" "}
+      <h1 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-navy">
+        Your Cart
+      </h1>{" "}
       {cart.map((item, index) => (
         <div
           key={index}
-          className="flex items-start justify-between border-b py-4"
+          className="flex items-start justify-between border-b border-line py-4"
         >
           {" "}
           <div>
             {" "}
-            <h2 className="font-semibold">{item.team}</h2>{" "}
+            <h2 className="font-semibold text-ink">{item.team}</h2>{" "}
             {item.size && (
-              <p className="text-sm text-gray-500">Size: {item.size}</p>
+              <p className="text-sm text-muted">Size: {item.size}</p>
             )}{" "}
             {(item.customName || item.customNumber) && (
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-muted">
                 {" "}
                 Print: {item.customName} {item.customNumber}{" "}
               </p>
             )}{" "}
             {badgeLabel(item.badge) && (
-              <p className="text-sm text-gray-500">{badgeLabel(item.badge)}</p>
+              <p className="text-sm text-muted">{badgeLabel(item.badge)}</p>
             )}{" "}
-            <p className="text-gray-800 font-medium mt-1">
-              KSh {item.price}
-            </p>{" "}
+            <p className="text-ink font-medium mt-1">KSh {item.price}</p>{" "}
           </div>{" "}
           <button
             onClick={() => removeFromCart(item.id)}
-            className="text-red-600 hover:underline"
+            className="text-red-600 hover:underline text-sm sm:text-base"
           >
             {" "}
             Remove{" "}
@@ -84,12 +84,14 @@ export default function Cart() {
         </div>
       ))}{" "}
       {error && <p className="text-red-600 text-sm mt-4">{error}</p>}{" "}
-      <div className="flex justify-between items-center mt-8">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mt-8">
         {" "}
-        <span className="text-xl font-bold">Total: KSh {total}</span>{" "}
+        <span className="text-lg sm:text-xl font-bold text-navy">
+          Total: KSh {total}
+        </span>{" "}
         <button
           onClick={handleCheckout}
-          className="bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800"
+          className="bg-accent text-white px-6 py-3 rounded-lg font-semibold hover:bg-accent-dark transition-colors w-full sm:w-auto"
         >
           {" "}
           Checkout{" "}

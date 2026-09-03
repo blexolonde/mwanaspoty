@@ -11,18 +11,20 @@ const METHODS = [
 
 export default function PaymentMethods() {
   return (
-    <section className="py-10 px-6">
-      <h2 className="text-xl font-bold text-center mb-6">We Accept</h2>
+    <section className="py-8 sm:py-10 px-4 sm:px-6">
+      <h2 className="text-lg sm:text-xl font-bold text-center mb-6 text-navy">
+        We Accept
+      </h2>
       <div className="grid grid-cols-2 gap-4 md:flex md:flex-wrap md:justify-center md:gap-4 max-w-4xl mx-auto">
         {METHODS.map((item, i) => {
           const Icon = item.icon;
           return (
             <div
               key={i}
-              className="flex items-center gap-2 border border-gray-200 rounded-full px-5 py-2"
+              className="flex items-center gap-2 border border-line rounded-full px-4 sm:px-5 py-2"
             >
-              <Icon size={20} className="text-gray-700" />
-              <span className="text-sm font-semibold text-gray-700">
+              <Icon size={20} className="text-ink" />
+              <span className="text-sm font-semibold text-ink">
                 {item.label}
               </span>
             </div>

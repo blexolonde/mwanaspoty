@@ -7,7 +7,7 @@ export default function Orders() {
   const [orders, setOrders] = useState([]);
   useEffect(() => {
     if (!token) return;
-    fetch("http://localhost:5000/api/orders", {
+    fetch("http://192.168.100.16:5000/api/orders", {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())
