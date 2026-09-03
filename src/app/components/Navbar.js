@@ -40,10 +40,10 @@ export default function Navbar() {
           <Image
             src="/mwanaspoty-logo.png"
             alt="MwanaSpoty"
-            width={140}
-            height={40}
+            width={340}
+            height={75}
             priority
-            className="h-8 sm:h-10 w-auto"
+            className="h-12 sm:h-16 w-auto"
           />
         </Link>
         <form
