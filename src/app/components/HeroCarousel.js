@@ -143,7 +143,7 @@ export default function HeroCarousel() {
             href="/shop"
             className="inline-block w-fit rounded-full bg-orange-500 px-8 py-3 font-semibold text-white hover:bg-orange-600"
           >
-            Shop Now
+            Buy Now
           </Link>
 
           {total > 1 && (

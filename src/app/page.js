@@ -3,6 +3,9 @@ import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import HeroCarousel from "./components/HeroCarousel";
+import ChampionsLeagueLogos from "./components/ChampionsLeagueLogos";
+import DeliveryInfoBar from "./components/DeliveryInfoBar";
+import PaymentMethods from "./components/PaymentMethods";
 
 function JerseySection({ title, jerseys, shopAllHref, shopAllLabel }) {
   const scrollRef = useRef(null);
@@ -174,18 +177,25 @@ export default function Home() {
         </Link>
       </section>
 
+      <ChampionsLeagueLogos />
+
       <JerseySection
         title="Classic Kits"
         jerseys={classicKits}
         shopAllHref="/shop"
         shopAllLabel="Shop Classic Kits"
       />
+
       <JerseySection
         title="Top Selling This Week"
         jerseys={topSelling}
         shopAllHref="/best-sellers"
         shopAllLabel="Shop Best Sellers"
       />
+
+      <DeliveryInfoBar />
+
+      <PaymentMethods />
     </main>
   );
 }
