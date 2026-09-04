@@ -1,30 +1,36 @@
 "use client";
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { useAuth } from "../components/AuthContext";
 import { ShoppingBag, Wallet, Users, PackageSearch } from "lucide-react";
+
 export default function AdminDashboard() {
   const { token, user } = useAuth();
   const [orders, setOrders] = useState([]);
   const [customers, setCustomers] = useState([]);
   const [lowStock, setLowStock] = useState([]);
+
   useEffect(() => {
     if (!token) return;
     const headers = { Authorization: `Bearer ${token}` };
+
     fetch("http://192.168.100.16:5000/api/admin/orders", { headers })
       .then((res) => res.json())
       .then(setOrders);
+
     fetch("http://192.168.100.16:5000/api/admin/customers", { headers })
       .then((res) => res.json())
       .then(setCustomers);
+
     fetch("http://192.168.100.16:5000/api/admin/analytics/low-stock", {
       headers,
     })
       .then((res) => res.json())
       .then(setLowStock);
   }, [token]);
+
   const totalRevenue = orders.reduce((sum, o) => sum + o.total, 0);
   const recentOrders = orders.slice(0, 5);
+
   const stats = [
     {
       label: "Total Orders",
@@ -51,15 +57,15 @@ export default function AdminDashboard() {
       color: "bg-red-100 text-red-600",
     },
   ];
+
   return (
     <main className="p-8 bg-gray-50 min-h-screen">
-      {" "}
-      <h1 className="text-3xl font-bold mb-1">Dashboard</h1>{" "}
+      <h1 className="text-3xl font-bold mb-1">Dashboard</h1>
       <p className="text-gray-500 mb-8">
         Welcome back{user ? `, ${user.name}` : ""}.
-      </p>{" "}
+      </p>
+
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10">
-        {" "}
         {stats.map((stat) => {
           const Icon = stat.icon;
           return (
@@ -67,23 +73,20 @@ export default function AdminDashboard() {
               key={stat.label}
               className="bg-white rounded-xl shadow-sm p-6 flex items-center gap-4"
             >
-              {" "}
               <div className={`p-3 rounded-full ${stat.color}`}>
-                {" "}
-                <Icon size={22} />{" "}
-              </div>{" "}
+                <Icon size={22} />
+              </div>
               <div>
-                {" "}
-                <p className="text-gray-500 text-sm">{stat.label}</p>{" "}
-                <p className="text-2xl font-bold">{stat.value}</p>{" "}
-              </div>{" "}
+                <p className="text-gray-500 text-sm">{stat.label}</p>
+                <p className="text-2xl font-bold">{stat.value}</p>
+              </div>
             </div>
           );
-        })}{" "}
-      </div>{" "}
+        })}
+      </div>
+
       <div className="bg-white rounded-xl shadow-sm p-6">
-        {" "}
-        <h2 className="text-lg font-bold mb-4">Recent Orders</h2>{" "}
+        <h2 className="text-lg font-bold mb-4">Recent Orders</h2>
         {recentOrders.length === 0 ? (
           <p className="text-gray-400 text-sm">No orders yet.</p>
         ) : (
@@ -105,8 +108,8 @@ export default function AdminDashboard() {
               ))}
             </tbody>
           </table>
-        )}{" "}
-      </div>{" "}
+        )}
+      </div>
     </main>
   );
 }
