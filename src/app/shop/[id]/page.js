@@ -18,7 +18,7 @@ export default function ProductDetails() {
   const [toast, setToast] = useState(null); // { message: string } | null
 
   useEffect(() => {
-    fetch(`http://192.168.100.16:5000/api/jerseys/${id}`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/jerseys/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setJersey(data);

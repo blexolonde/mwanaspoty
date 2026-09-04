@@ -21,8 +21,8 @@ const SEGMENT_COLORS = ["#16a34a", "#f59e0b", "#dc2626"];
 
 function Card({ title, children }) {
   return (
-    <div className="bg-white rounded-xl shadow-sm p-6">
-      <h2 className="text-lg font-bold mb-4">{title}</h2>
+    <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6">
+      <h2 className="text-base sm:text-lg font-bold mb-4 text-navy">{title}</h2>
       {children}
     </div>
   );
@@ -39,29 +39,37 @@ export default function AdminAnalytics() {
   useEffect(() => {
     if (!token) return;
     const headers = { Authorization: `Bearer ${token}` };
-    fetch("http://192.168.100.16:5000/api/admin/analytics/best-sellers", {
-      headers,
-    })
+
+    fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/admin/analytics/best-sellers`,
+      { headers },
+    )
       .then((res) => res.json())
       .then(setBestSellers);
-    fetch("http://192.168.100.16:5000/api/admin/analytics/best-leagues", {
-      headers,
-    })
+
+    fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/admin/analytics/best-leagues`,
+      { headers },
+    )
       .then((res) => res.json())
       .then(setBestLeagues);
-    fetch("http://192.168.100.16:5000/api/admin/analytics/low-stock", {
+
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/analytics/low-stock`, {
       headers,
     })
       .then((res) => res.json())
       .then(setLowStock);
-    fetch("http://192.168.100.16:5000/api/admin/analytics/segments", {
+
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/analytics/segments`, {
       headers,
     })
       .then((res) => res.json())
       .then(setSegments);
-    fetch("http://192.168.100.16:5000/api/admin/analytics/sales-trend", {
-      headers,
-    })
+
+    fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/admin/analytics/sales-trend`,
+      { headers },
+    )
       .then((res) => res.json())
       .then(setTrend);
   }, [token]);
@@ -73,12 +81,14 @@ export default function AdminAnalytics() {
   ];
 
   return (
-    <main className="p-8 bg-gray-50 min-h-screen">
-      <h1 className="text-3xl font-bold mb-8">Analytics</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <main className="p-4 sm:p-8 bg-bg-soft min-h-screen">
+      <h1 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-navy">
+        Analytics
+      </h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
         <Card title="Best-Selling Jerseys">
           {bestSellers.length === 0 ? (
-            <p className="text-gray-400 text-sm">No sales data yet.</p>
+            <p className="text-muted text-sm">No sales data yet.</p>
           ) : (
             <ResponsiveContainer width="100%" height={250}>
               <BarChart
@@ -90,7 +100,7 @@ export default function AdminAnalytics() {
                 <XAxis type="number" allowDecimals={false} />
                 <YAxis type="category" dataKey="team" width={120} />
                 <Tooltip />
-                <Bar dataKey="sold" fill="#2563eb" radius={[0, 4, 4, 0]} />
+                <Bar dataKey="sold" fill="#123524" radius={[0, 4, 4, 0]} />
               </BarChart>
             </ResponsiveContainer>
           )}
@@ -98,7 +108,7 @@ export default function AdminAnalytics() {
 
         <Card title="Best-Selling Leagues">
           {bestLeagues.length === 0 ? (
-            <p className="text-gray-400 text-sm">No sales data yet.</p>
+            <p className="text-muted text-sm">No sales data yet.</p>
           ) : (
             <ResponsiveContainer width="100%" height={250}>
               <BarChart
@@ -110,7 +120,7 @@ export default function AdminAnalytics() {
                 <XAxis type="number" allowDecimals={false} />
                 <YAxis type="category" dataKey="league" width={120} />
                 <Tooltip />
-                <Bar dataKey="sold" fill="#f97316" radius={[0, 4, 4, 0]} />
+                <Bar dataKey="sold" fill="#D4A72C" radius={[0, 4, 4, 0]} />
               </BarChart>
             </ResponsiveContainer>
           )}
@@ -118,7 +128,7 @@ export default function AdminAnalytics() {
 
         <Card title="Customer Segments">
           {segments.high + segments.medium + segments.low === 0 ? (
-            <p className="text-gray-400 text-sm">No customer spend data yet.</p>
+            <p className="text-muted text-sm">No customer spend data yet.</p>
           ) : (
             <ResponsiveContainer width="100%" height={250}>
               <PieChart>
@@ -142,13 +152,13 @@ export default function AdminAnalytics() {
 
         <Card title="Low Stock Alerts">
           {lowStock.length === 0 ? (
-            <p className="text-gray-400 text-sm">All jerseys well stocked.</p>
+            <p className="text-muted text-sm">All jerseys well stocked.</p>
           ) : (
             <div className="space-y-2">
               {lowStock.map((j) => (
                 <div
                   key={j.id}
-                  className="flex justify-between text-sm border-b pb-2"
+                  className="flex justify-between text-sm border-b border-line pb-2 text-ink"
                 >
                   <span>{j.team}</span>
                   <span className="text-red-600 font-semibold">
@@ -162,9 +172,7 @@ export default function AdminAnalytics() {
 
         <Card title="Sales Trend (Last 7 Days)">
           {trend.length === 0 ? (
-            <p className="text-gray-400 text-sm">
-              No sales in the last 7 days.
-            </p>
+            <p className="text-muted text-sm">No sales in the last 7 days.</p>
           ) : (
             <ResponsiveContainer width="100%" height={250}>
               <LineChart data={trend}>
@@ -175,7 +183,7 @@ export default function AdminAnalytics() {
                 <Line
                   type="monotone"
                   dataKey="total"
-                  stroke="#16a34a"
+                  stroke="#D4A72C"
                   strokeWidth={2}
                 />
               </LineChart>

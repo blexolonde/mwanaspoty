@@ -25,7 +25,7 @@ const HERO_IMAGES = [
     position: "object-[center_20%]",
   },
   {
-    src: "/hero/-Azam-26-27 models.jpg",
+    src: "/hero/Azam-26-27 models.png",
     alt: "Azam players modeling the 26-27 kits",
     position: "object-top",
   },
@@ -47,6 +47,16 @@ const HERO_IMAGES = [
   {
     src: "/hero/frankie barca.jpg",
     alt: "Barcelona player modeling the 26-27 kits",
+    position: "object-[center_02%]",
+  },
+  {
+    src: "/hero/ajax team.jpg",
+    alt: "Ajax players modeling the 26-27 away kits",
+    position: "object-[center_02%]",
+  },
+  {
+    src: "/hero/Afc-leopard models.jpg",
+    alt: "Afc-leopard players modeling the 26-27 kits",
     position: "object-[center_02%]",
   },
   {

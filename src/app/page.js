@@ -152,10 +152,10 @@ export default function Home() {
   const [topSelling, setTopSelling] = useState([]);
 
   useEffect(() => {
-    fetch("http://192.168.100.16:5000/api/jerseys?classic=true")
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/jerseys?classic=true`)
       .then((res) => res.json())
       .then((data) => setClassicKits(data.slice(0, 12)));
-    fetch("http://192.168.100.16:5000/api/best-sellers")
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/best-sellers`)
       .then((res) => res.json())
       .then((data) => setTopSelling(data.slice(0, 12)));
   }, []);

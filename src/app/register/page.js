@@ -10,11 +10,14 @@ export default function Register() {
   async function handleSubmit(e) {
     e.preventDefault();
     setError("");
-    const res = await fetch("http://192.168.100.16:5000/api/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, password }),
-    });
+    const res = await fetch(
+      "`${process.env.NEXT_PUBLIC_API_URL}/api/register`",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password }),
+      },
+    );
     const data = await res.json();
     if (!res.ok) {
       setError(data.error);

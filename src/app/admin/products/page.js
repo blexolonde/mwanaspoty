@@ -17,7 +17,7 @@ export default function AdminProducts() {
   const [uploading, setUploading] = useState(false);
 
   function loadJerseys() {
-    fetch("http://192.168.100.16:5000/api/jerseys")
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/jerseys`)
       .then((res) => res.json())
       .then((data) => setJerseys(data));
   }
@@ -59,11 +59,14 @@ export default function AdminProducts() {
       const formData = new FormData();
       imageFiles.forEach((file) => formData.append("images", file));
 
-      const uploadRes = await fetch("http://192.168.100.16:5000/api/upload", {
-        method: "POST",
-        headers: { Authorization: `Bearer ${token}` },
-        body: formData,
-      });
+      const uploadRes = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/upload`,
+        {
+          method: "POST",
+          headers: { Authorization: `Bearer ${token}` },
+          body: formData,
+        },
+      );
       const uploadData = await uploadRes.json();
       imageUrls = uploadData.urls;
     }
@@ -78,16 +81,19 @@ export default function AdminProducts() {
     });
 
     if (editingId) {
-      await fetch(`http://192.168.100.16:5000/api/jerseys/${editingId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+      await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/jerseys/${editingId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body,
         },
-        body,
-      });
+      );
     } else {
-      await fetch("http://192.168.100.16:5000/api/jerseys", {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/jerseys`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -103,7 +109,7 @@ export default function AdminProducts() {
   }
 
   async function handleDelete(id) {
-    await fetch(`http://192.168.100.16:5000/api/jerseys/${id}`, {
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/jerseys/${id}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -117,7 +123,6 @@ export default function AdminProducts() {
         Products
       </h1>
 
-      {/* Add / Edit form */}
       <div className="bg-white rounded-xl shadow-sm p-4 sm:p-6 mb-8">
         <div className="flex items-center justify-between mb-4">
           <h2 className="font-semibold text-ink">
@@ -241,7 +246,6 @@ export default function AdminProducts() {
         </form>
       </div>
 
-      {/* Products table */}
       <div className="bg-white rounded-xl shadow-sm overflow-x-auto">
         <table className="w-full text-sm min-w-[640px]">
           <thead>
@@ -277,9 +281,7 @@ export default function AdminProducts() {
                 <td className="px-4 sm:px-6 font-medium text-ink">
                   {jersey.team}
                 </td>
-                <td className="px-4 sm:px-6 text-ink">
-                  KSh {jersey.price}
-                </td>
+                <td className="px-4 sm:px-6 text-ink">KSh {jersey.price}</td>
                 <td className="px-4 sm:px-6 text-muted">{jersey.league}</td>
                 <td className="px-4 sm:px-6 text-muted">{jersey.stock}</td>
                 <td className="px-4 sm:px-6">

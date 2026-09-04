@@ -11,7 +11,7 @@ export default function CategoryPage() {
   const [sort, setSort] = useState("featured");
   useEffect(() => {
     fetch(
-      `http://192.168.100.16:5000/api/jerseys?league=${encodeURIComponent(decodedLeague)}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/jerseys?league=${encodeURIComponent(decodedLeague)}`,
     )
       .then((res) => res.json())
       .then((data) => setJerseys(data));

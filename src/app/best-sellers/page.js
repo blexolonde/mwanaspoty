@@ -1,43 +1,49 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+
 export default function BestSellers() {
   const [jerseys, setJerseys] = useState([]);
+
   useEffect(() => {
-    fetch("http://192.168.100.16:5000/api/best-sellers")
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/best-sellers`)
       .then((res) => res.json())
       .then((data) => setJerseys(data));
   }, []);
+
   return (
-    <main className="px-6 py-12">
-      {" "}
-      <h1 className="text-3xl font-bold mb-8">Best Sellers</h1>{" "}
+    <main className="px-4 sm:px-6 py-10 sm:py-12">
+      <h1 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-navy">
+        Best Sellers
+      </h1>
       {jerseys.length === 0 && (
-        <p className="text-gray-500">No sales data yet — check back soon!</p>
-      )}{" "}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-        {" "}
+        <p className="text-muted">No sales data yet — check back soon!</p>
+      )}
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
         {jerseys.map((jersey) => (
           <Link
             key={jersey.id}
             href={`/shop/${jersey.id}`}
-            className="border rounded-lg p-4 text-center block hover:shadow-md"
+            className="border border-line rounded-lg p-3 sm:p-4 text-center block hover:shadow-md hover:border-accent transition-all"
           >
-            {" "}
             {jersey.images?.[0] ? (
               <img
                 src={jersey.images?.[0]}
                 alt={jersey.team}
-                className="h-40 w-full object-contain bg-gray-50 mb-4 rounded"
+                className="h-32 sm:h-40 w-full object-contain bg-bg-soft mb-3 sm:mb-4 rounded"
               />
             ) : (
-              <div className="bg-gray-100 h-40 mb-4 rounded"></div>
-            )}{" "}
-            <h2 className="font-semibold">{jersey.team}</h2>{" "}
-            <p className="text-gray-600">KSh {jersey.price}</p>{" "}
+              <div className="bg-bg-soft h-32 sm:h-40 mb-3 sm:mb-4 rounded"></div>
+            )}
+            <h2 className="font-semibold text-sm sm:text-base text-ink">
+              {jersey.team}
+            </h2>
+            <p className="text-muted text-sm sm:text-base">
+              KSh {jersey.price}
+            </p>
           </Link>
-        ))}{" "}
-      </div>{" "}
+        ))}
+      </div>
     </main>
   );
 }

@@ -9,7 +9,7 @@ export default function Search() {
   const [results, setResults] = useState([]);
   useEffect(() => {
     fetch(
-      `http://192.168.100.16:5000/api/jerseys?search=${encodeURIComponent(query)}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/jerseys?search=${encodeURIComponent(query)}`,
     )
       .then((res) => res.json())
       .then((data) => setResults(data));

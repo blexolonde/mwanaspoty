@@ -6,7 +6,7 @@ export default function Categories() {
   const [leagues, setLeagues] = useState([]);
 
   useEffect(() => {
-    fetch("http://192.168.100.16:5000/api/leagues")
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/leagues`)
       .then((res) => res.json())
       .then((data) => setLeagues(data));
   }, []);

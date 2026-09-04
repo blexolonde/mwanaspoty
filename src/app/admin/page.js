@@ -13,17 +13,22 @@ export default function AdminDashboard() {
     if (!token) return;
     const headers = { Authorization: `Bearer ${token}` };
 
-    fetch("http://192.168.100.16:5000/api/admin/orders", { headers })
+    fetch("`${process.env.NEXT_PUBLIC_API_URL}/api/admin/orders`", { headers })
       .then((res) => res.json())
       .then(setOrders);
 
-    fetch("http://192.168.100.16:5000/api/admin/customers", { headers })
+    fetch("`${process.env.NEXT_PUBLIC_API_URL}/api/admin/customers`", {
+      headers,
+    })
       .then((res) => res.json())
       .then(setCustomers);
 
-    fetch("http://192.168.100.16:5000/api/admin/analytics/low-stock", {
-      headers,
-    })
+    fetch(
+      "`${process.env.NEXT_PUBLIC_API_URL}/api/admin/analytics/low-stock`",
+      {
+        headers,
+      },
+    )
       .then((res) => res.json())
       .then(setLowStock);
   }, [token]);

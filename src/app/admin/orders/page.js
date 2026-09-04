@@ -13,7 +13,7 @@ export default function AdminOrders() {
   const [orders, setOrders] = useState([]);
 
   function loadOrders() {
-    fetch("http://192.168.100.16:5000/api/admin/orders", {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/orders`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())
@@ -25,7 +25,7 @@ export default function AdminOrders() {
   }, [token]);
 
   async function handleStatusChange(id, status) {
-    await fetch(`http://192.168.100.16:5000/api/admin/orders/${id}`, {
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/orders/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -37,38 +37,46 @@ export default function AdminOrders() {
   }
 
   return (
-    <main className="p-8 bg-gray-50 min-h-screen">
-      <h1 className="text-3xl font-bold mb-8">Orders</h1>
+    <main className="p-4 sm:p-8 bg-bg-soft min-h-screen">
+      <h1 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-navy">
+        Orders
+      </h1>
 
-      <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-        <table className="w-full text-sm">
+      <div className="bg-white rounded-xl shadow-sm overflow-x-auto">
+        <table className="w-full text-sm min-w-[640px]">
           <thead>
-            <tr className="text-left bg-gray-50 text-gray-500 border-b">
-              <th className="py-3 px-6">Order</th>
-              <th className="px-6">Customer</th>
-              <th className="px-6">Date</th>
-              <th className="px-6">Items</th>
-              <th className="px-6">Total</th>
-              <th className="px-6">Status</th>
+            <tr className="text-left bg-bg-soft text-muted border-b border-line">
+              <th className="py-3 px-4 sm:px-6">Order</th>
+              <th className="px-4 sm:px-6">Customer</th>
+              <th className="px-4 sm:px-6">Date</th>
+              <th className="px-4 sm:px-6">Items</th>
+              <th className="px-4 sm:px-6">Total</th>
+              <th className="px-4 sm:px-6">Status</th>
             </tr>
           </thead>
           <tbody>
             {orders.map((order) => (
               <tr
                 key={order.id}
-                className="border-b last:border-0 hover:bg-gray-50"
+                className="border-b border-line last:border-0 hover:bg-bg-soft"
               >
-                <td className="py-4 px-6 font-medium">#{order.id}</td>
-                <td className="px-6">
-                  <p className="font-medium">{order.user?.name}</p>
-                  <p className="text-xs text-gray-400">{order.user?.email}</p>
+                <td className="py-4 px-4 sm:px-6 font-medium text-ink">
+                  #{order.id}
                 </td>
-                <td className="px-6 text-gray-500">
+                <td className="px-4 sm:px-6">
+                  <p className="font-medium text-ink">{order.user?.name}</p>
+                  <p className="text-xs text-muted">{order.user?.email}</p>
+                </td>
+                <td className="px-4 sm:px-6 text-muted">
                   {new Date(order.createdAt).toLocaleDateString()}
                 </td>
-                <td className="px-6 text-gray-500">{order.items.length}</td>
-                <td className="px-6 font-semibold">KSh {order.total}</td>
-                <td className="px-6">
+                <td className="px-4 sm:px-6 text-muted">
+                  {order.items.length}
+                </td>
+                <td className="px-4 sm:px-6 font-semibold text-navy">
+                  KSh {order.total}
+                </td>
+                <td className="px-4 sm:px-6">
                   <select
                     value={order.status}
                     onChange={(e) =>
@@ -86,7 +94,7 @@ export default function AdminOrders() {
           </tbody>
         </table>
         {orders.length === 0 && (
-          <p className="text-gray-400 text-sm p-6">No orders yet.</p>
+          <p className="text-muted text-sm p-6">No orders yet.</p>
         )}
       </div>
     </main>
