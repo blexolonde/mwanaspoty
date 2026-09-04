@@ -1,12 +1,12 @@
-import { Smartphone, CreditCard, Wallet } from "lucide-react";
+import { Wallet } from "lucide-react";
 
 const METHODS = [
-  { icon: Smartphone, label: "M-Pesa" },
-  { icon: Smartphone, label: "Airtel Money" },
-  { icon: CreditCard, label: "Visa" },
-  { icon: CreditCard, label: "Mastercard" },
-  { icon: CreditCard, label: "PayPal" },
-  { icon: Wallet, label: "Payoneer" },
+  { image: "/mpesaa.png", label: "M-Pesa" },
+  { image: "/Airtel-Money.png", label: "Airtel Money" },
+  { image: "/visa.png", label: "Visa" },
+  { image: "/mastercard.png", label: "Mastercard" },
+  { image: "/paypal.png", label: "PayPal" },
+  { image: "/payoneer.png", icon: Wallet, label: "Payoneer" },
 ];
 
 export default function PaymentMethods() {
@@ -15,18 +15,24 @@ export default function PaymentMethods() {
       <h2 className="text-lg sm:text-xl font-bold text-center mb-6 text-navy">
         We Accept
       </h2>
-      <div className="grid grid-cols-2 gap-4 md:flex md:flex-wrap md:justify-center md:gap-4 max-w-4xl mx-auto">
+      <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 max-w-4xl mx-auto">
         {METHODS.map((item, i) => {
           const Icon = item.icon;
           return (
             <div
               key={i}
-              className="flex items-center gap-2 border border-line rounded-full px-4 sm:px-5 py-2"
+              className="flex items-center justify-center border border-line rounded-full px-5 py-3 h-12 sm:h-14"
+              title={item.label}
             >
-              <Icon size={20} className="text-ink" />
-              <span className="text-sm font-semibold text-ink">
-                {item.label}
-              </span>
+              {item.image ? (
+                <img
+                  src={item.image}
+                  alt={item.label}
+                  className="h-6 sm:h-7 w-auto object-contain"
+                />
+              ) : (
+                <Icon size={22} className="text-ink" />
+              )}
             </div>
           );
         })}
