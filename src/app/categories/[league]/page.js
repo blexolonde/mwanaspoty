@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
+import LeagueLogoMarquee from "../../components/LeagueLogoMarquee";
+
 export default function CategoryPage() {
   const { league } = useParams();
   const decodedLeague = decodeURIComponent(league);
@@ -20,56 +22,70 @@ export default function CategoryPage() {
     return 0;
   });
   return (
-    <main className="px-8 py-12 max-w-[1600px] mx-auto">
+    <main className="max-w-[1600px] mx-auto">
       {" "}
-      <div className="flex justify-between items-center mb-8">
+      <div className="px-4 sm:px-8 pt-8 sm:pt-12 pb-6">
         {" "}
-        <div>
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-2">
           {" "}
-          <h1 className="text-3xl font-bold">{decodedLeague}</h1>{" "}
-          <p className="text-gray-500 text-sm">
-            {jerseys.length} products
-          </p>{" "}
-        </div>{" "}
-        <select
-          value={sort}
-          onChange={(e) => setSort(e.target.value)}
-          className="border rounded px-3 py-2 text-sm"
-        >
-          {" "}
-          <option value="featured">Sort by: Featured</option>{" "}
-          <option value="price-asc">Price: Low to High</option>{" "}
-          <option value="price-desc">Price: High to Low</option>{" "}
-        </select>{" "}
-      </div>{" "}
-      {sortedJerseys.length === 0 && (
-        <p className="text-gray-500">No jerseys in this league yet.</p>
-      )}{" "}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
-        {" "}
-        {sortedJerseys.map((jersey) => (
-          <div key={jersey.id} className="border rounded-lg p-5 flex flex-col">
+          <div>
             {" "}
-            {jersey.images?.[0] ? (
-              <img
-                src={jersey.images?.[0]}
-                alt={jersey.team}
-                className="h-80 w-full object-contain bg-gray-50 mb-4 rounded"
-              />
-            ) : (
-              <div className="bg-gray-100 h-80 w-full mb-4 rounded"></div>
-            )}{" "}
-            <p className="font-bold text-lg mb-1">KSh {jersey.price}</p>{" "}
-            <p className="text-base text-gray-700 mb-3">{jersey.team}</p>{" "}
-            <Link
-              href={`/shop/${jersey.id}`}
-              className="border border-green-600 text-green-700 rounded-full px-5 py-1 text-sm font-semibold text-center hover:bg-green-600 hover:text-white"
+            <h1 className="text-2xl sm:text-3xl font-bold text-navy">
+              {decodedLeague}
+            </h1>{" "}
+            <p className="text-muted text-sm">{jerseys.length} products</p>{" "}
+          </div>{" "}
+          <select
+            value={sort}
+            onChange={(e) => setSort(e.target.value)}
+            className="border border-line rounded px-3 py-2 text-sm text-ink outline-none focus:border-accent transition-colors w-full sm:w-auto"
+          >
+            {" "}
+            <option value="featured">Sort by: Featured</option>{" "}
+            <option value="price-asc">Price: Low to High</option>{" "}
+            <option value="price-desc">Price: High to Low</option>{" "}
+          </select>{" "}
+        </div>{" "}
+      </div>{" "}
+      <LeagueLogoMarquee league={decodedLeague} />
+      <div className="px-4 sm:px-8 py-8 sm:py-12">
+        {" "}
+        {sortedJerseys.length === 0 && (
+          <p className="text-muted">No jerseys in this league yet.</p>
+        )}{" "}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-10">
+          {" "}
+          {sortedJerseys.map((jersey) => (
+            <div
+              key={jersey.id}
+              className="border border-line rounded-lg p-3 sm:p-5 flex flex-col"
             >
               {" "}
-              Buy now{" "}
-            </Link>{" "}
-          </div>
-        ))}{" "}
+              {jersey.images?.[0] ? (
+                <img
+                  src={jersey.images?.[0]}
+                  alt={jersey.team}
+                  className="h-48 sm:h-64 md:h-80 w-full object-contain bg-bg-soft mb-4 rounded"
+                />
+              ) : (
+                <div className="bg-bg-soft h-48 sm:h-64 md:h-80 w-full mb-4 rounded"></div>
+              )}{" "}
+              <p className="font-bold text-base sm:text-lg mb-1 text-navy">
+                KSh {jersey.price}
+              </p>{" "}
+              <p className="text-sm sm:text-base text-muted mb-3">
+                {jersey.team}
+              </p>{" "}
+              <Link
+                href={`/shop/${jersey.id}`}
+                className="border border-accent text-accent-dark rounded-full px-5 py-1 text-sm font-semibold text-center hover:bg-accent hover:text-white transition-colors"
+              >
+                {" "}
+                Buy now{" "}
+              </Link>{" "}
+            </div>
+          ))}{" "}
+        </div>{" "}
       </div>{" "}
     </main>
   );

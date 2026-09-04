@@ -1,4 +1,11 @@
 import Link from "next/link";
+
+const SOCIALS = [
+  { image: "/facebook-logo.png", label: "Facebook", href: "#" },
+  { image: "/instagram-logo.png", label: "Instagram", href: "#" },
+  { image: "/x-logo.png", label: "X (Twitter)", href: "#" },
+];
+
 export default function Footer() {
   return (
     <footer className="bg-navy-deep text-gray-300 mt-16">
@@ -76,15 +83,22 @@ export default function Footer() {
         <div>
           {" "}
           <h3 className="text-white font-semibold mb-3">Follow Us</h3>{" "}
-          <div className="flex gap-4">
+          <div className="flex gap-3">
             {" "}
-            <span className="hover:text-accent cursor-pointer">
-              Facebook
-            </span>{" "}
-            <span className="hover:text-accent cursor-pointer">Instagram</span>{" "}
-            <span className="hover:text-accent cursor-pointer">
-              Twitter
-            </span>{" "}
+            {SOCIALS.map((social) => (
+              <a
+                key={social.label}
+                href={social.href}
+                aria-label={social.label}
+                className="flex items-center justify-center h-9 w-9 rounded-full bg-white/10 hover:bg-accent transition-colors"
+              >
+                <img
+                  src={social.image}
+                  alt={social.label}
+                  className="h-5 w-5 object-contain"
+                />
+              </a>
+            ))}{" "}
           </div>{" "}
         </div>{" "}
       </div>{" "}
