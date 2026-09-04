@@ -19,7 +19,7 @@ export default function Navbar() {
   const router = useRouter();
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/jerseys`)
+    fetch("http://192.168.100.16:5000/api/jerseys")
       .then((res) => res.json())
       .then((data) => setAllJerseys(data));
   }, []);
@@ -40,8 +40,8 @@ export default function Navbar() {
           <Image
             src="/mwanaspoty-logo.png"
             alt="MwanaSpoty"
-            width={340}
-            height={75}
+            width={300}
+            height={91}
             priority
             className="h-12 sm:h-16 w-auto"
           />
@@ -141,23 +141,27 @@ export default function Navbar() {
               {league}
             </Link>
             {hoveredLeague === league && (
-              <div className="absolute top-full left-0 bg-white text-black shadow-lg rounded-b-lg py-2 w-48 z-50">
-                {allJerseys.filter((j) => j.league === league).length === 0 && (
-                  <p className="px-4 py-1 text-sm text-gray-400">
-                    No teams yet
-                  </p>
-                )}
-                {allJerseys
-                  .filter((j) => j.league === league)
-                  .map((jersey) => (
-                    <Link
-                      key={jersey.id}
-                      href={`/shop/${jersey.id}`}
-                      className="block px-4 py-1 text-sm hover:bg-gray-100"
-                    >
-                      {jersey.team}
-                    </Link>
-                  ))}
+              <div className="absolute top-full left-0 mt-1 bg-white text-ink shadow-xl border border-line rounded-lg py-2 w-64 z-50 animate-in fade-in slide-in-from-top-1 duration-150">
+                <p className="px-4 pb-2 mb-1 text-xs font-semibold text-muted uppercase tracking-wide border-b border-line">
+                  {league}
+                </p>
+                <div className="max-h-72 overflow-y-auto">
+                  {allJerseys.filter((j) => j.league === league).length ===
+                    0 && (
+                    <p className="px-4 py-2 text-sm text-muted">No teams yet</p>
+                  )}
+                  {allJerseys
+                    .filter((j) => j.league === league)
+                    .map((jersey) => (
+                      <Link
+                        key={jersey.id}
+                        href={`/shop/${jersey.id}`}
+                        className="block px-4 py-2 text-sm text-ink hover:bg-bg-soft hover:text-accent-dark transition-colors"
+                      >
+                        {jersey.team}
+                      </Link>
+                    ))}
+                </div>
               </div>
             )}
           </div>
