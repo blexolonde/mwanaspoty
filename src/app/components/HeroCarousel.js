@@ -20,7 +20,7 @@ const HERO_IMAGES = [
     position: "object-[center_40%]",
   },
   {
-    src: "/hero/bayern away 26-27.png",
+    src: "/hero/Bayern away 26-27.png",
     alt: "Three Bayern München players modeling the 26-27 kits",
     position: "object-[center_20%]",
   },
