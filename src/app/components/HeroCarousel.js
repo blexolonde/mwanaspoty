@@ -74,6 +74,11 @@ const HERO_IMAGES = [
     alt: "Chelsea team photo modeling the 26-27 kits",
     position: "object-[center_60%]",
   },
+  {
+    src: "/hero/Yanga home 26-27 models.jpg",
+    alt: "Yanga home models the 26-27 kits",
+    position: "object-[center_60%]",
+  },
 ];
 
 const DWELL_MS = 5500;
