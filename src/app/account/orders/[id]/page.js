@@ -10,21 +10,29 @@ export default function OrderDetails() {
 
   useEffect(() => {
     if (!token) return;
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/${id}`, {`
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/orders/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())
       .then((data) => setOrder(data));
   }, [id, token]);
 
-  if (!order) return <p className="p-6">Loading order...</p>;
+  if (!order)
+    return <p className="p-6 text-muted">Loading order...</p>;
 
   return (
-    <main className="px-6 py-12 max-w-2xl mx-auto">
-      <h1 className="text-3xl font-bold mb-2">Order #{order.id}</h1>
-      <p className="text-gray-600 mb-8">Status: {order.status}</p>
+    <main className="px-4 sm:px-6 py-8 sm:py-12 max-w-2xl mx-auto">
+      <h1 className="text-2xl sm:text-3xl font-bold mb-2 text-navy">
+        Order #{order.id}
+      </h1>
+      <p className="text-muted mb-6 sm:mb-8 capitalize">
+        Status: {order.status}
+      </p>
       {order.items.map((item) => (
-        <div key={item.id} className="flex justify-between border-b py-4">
+        <div
+          key={item.id}
+          className="flex justify-between border-b border-line py-4 text-ink"
+        >
           <span>
             {item.team} x{item.quantity}
           </span>
@@ -32,8 +40,10 @@ export default function OrderDetails() {
         </div>
       ))}
       <div className="flex justify-between mt-8">
-        <span className="text-xl font-bold">Total</span>
-        <span className="text-xl font-bold">KSh {order.total}</span>
+        <span className="text-lg sm:text-xl font-bold text-navy">Total</span>
+        <span className="text-lg sm:text-xl font-bold text-navy">
+          KSh {order.total}
+        </span>
       </div>
     </main>
   );
