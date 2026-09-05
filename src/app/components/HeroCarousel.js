@@ -55,7 +55,7 @@ const HERO_IMAGES = [
     position: "object-[center_02%]",
   },
   {
-    src: "/hero/Afc-leopard models.jpg",
+    src: "/hero/Afc-leopard models.png",
     alt: "Afc-leopard players modeling the 26-27 kits",
     position: "object-[center_02%]",
   },
