@@ -77,7 +77,7 @@ const HERO_IMAGES = [
   {
     src: "/hero/Yanga home 26-27 models.jpg",
     alt: "Yanga home models the 26-27 kits",
-    position: "object-[center_60%]",
+    position: "object-[center_50%]",
   },
 ];
 
